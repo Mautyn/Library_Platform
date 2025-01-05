@@ -1,0 +1,8 @@
+.side_anhorPane{
+    -fxbackground-color: #353A56;
+    /*-fx-border-color: #2207bb;*/
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}

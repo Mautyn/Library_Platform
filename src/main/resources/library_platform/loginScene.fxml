@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,8 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.ClientController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.LoginController">
    <children>
       <VBox prefHeight="542.0" prefWidth="223.0">
          <children>
@@ -51,7 +53,45 @@
       </VBox>
       <Pane prefHeight="542.0" prefWidth="769.0">
          <children>
-            <Pane layoutY="174.0" prefHeight="247.0" prefWidth="728.0" />
+            <Pane layoutX="62.0" layoutY="94.0" prefHeight="327.0" prefWidth="615.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in to our platform!" wrappingWidth="330.0">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Text>
+                  <Pane layoutX="334.0" prefHeight="327.0" prefWidth="281.0" style="-fx-background-color: #0e636e;">
+                     <children>
+                        <TextField id="LoginTextField" layoutX="66.0" layoutY="115.0" />
+                        <TextField id="PasswordTextField" layoutX="66.0" layoutY="179.0" />
+                        <Text fill="WHITE" layoutX="66.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="66.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email address" wrappingWidth="85.443359375">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <JFXButton id="Log_InButton" layoutX="98.0" layoutY="241.0" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #FFFFFF;" text="Log in">
+                           <font>
+                              <Font name="System Italic" size="13.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </Pane>
+                  <Text fill="#7c7878" layoutX="25.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have account yet? Join us!" wrappingWidth="160.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <JFXButton id="ToRegisterButton" layoutX="150.0" layoutY="250.0" prefHeight="31.0" prefWidth="97.0" style="-fx-background-color: #7c7878;" text="Register" textFill="#fffdfd">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+               </children></Pane>
          </children>
       </Pane>
    </children>

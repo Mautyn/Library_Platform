@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
+<VBox alignment="TOP_CENTER" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6; -fx-padding: 10;" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.views.LoginRegisterController">
+    <HBox alignment="TOP_LEFT">
+        <JFXButton id="login_button" onAction="#onBackClick" layoutX="25.0" layoutY="135.0" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #cacabb;" text="Back" textFill="BLACK">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </JFXButton>
+    </HBox>
+    <VBox alignment="TOP_CENTER" style="-fx-background-color: #f1f1e6; -fx-padding: 80;" >
+        <children>
+            <VBox alignment="TOP_CENTER" style="-fx-spacing: 40">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Log in / Register">
+                    <font>
+                        <Font name="System Bold" size="32.0" />
+                    </font>
+                </Text>
+                <HBox alignment="CENTER" style="-fx-spacing: 30">
+                    <VBox prefWidth="250.0" style="-fx-spacing: 10">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Log in">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Text>
+                        <VBox prefWidth="250.0" style="-fx-spacing: 5;">
+                            <Label text="Username" />
+                            <TextField prefWidth="250.0" fx:id="loginUsername"/>
+                        </VBox>
+                        <VBox prefWidth="250.0" style="-fx-spacing: 5;">
+                            <Label text="Password" />
+                            <PasswordField prefWidth="250.0" fx:id="loginPassword"/>
+                        </VBox>
+                        <HBox alignment="BOTTOM_RIGHT" prefWidth="250.0" prefHeight="117.0">
+                            <JFXButton id="login_button" onAction="#onLoginClick" layoutX="25.0" layoutY="135.0" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #3a8c79;" text="Log in" textFill="WHITE">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </JFXButton>
+                        </HBox>
+                    </VBox>
+                    <Separator prefHeight="250.0" orientation="VERTICAL" />
+                    <VBox prefWidth="250.0" style="-fx-spacing: 10">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Text>
+                        <VBox prefWidth="250.0" style="-fx-spacing: 5;">
+                            <Label text="Username" />
+                            <TextField prefWidth="250.0" fx:id="registerUsername"/>
+                        </VBox>
+                        <VBox prefWidth="250.0" style="-fx-spacing: 5;">
+                            <Label text="Password" />
+                            <PasswordField prefWidth="250.0" fx:id="registerPassword"/>
+                        </VBox>
+                        <VBox prefWidth="250.0" style="-fx-spacing: 5;">
+                            <Label text="Repeat password" />
+                            <PasswordField prefWidth="250.0" fx:id="registerRepeatPassword"/>
+                        </VBox>
+                        <HBox alignment="BOTTOM_RIGHT" prefWidth="250.0" prefHeight="60.0">
+                            <JFXButton id="register_button" onAction="#onRegisterClick" layoutX="25.0" layoutY="135.0" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #3a8c79;" text="Register" textFill="WHITE">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </JFXButton>
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </children>
+    </VBox>
+</VBox>

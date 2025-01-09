@@ -10,7 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0"
+      prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="library_platform.Client.views.HelloViewController" >
    <children>
       <VBox prefHeight="542.0" prefWidth="223.0">
          <children>
@@ -25,22 +27,22 @@
                      <image>
                         <Image url="@obrazy/196039.png" />
                      </image></ImageView>
-                  <JFXButton id="Catogories_button" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
+                  <JFXButton id="Catogories_button" onAction="#onCategoriesClick" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="rActivity_button" layoutX="32.0" layoutY="217.0" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
+                  <JFXButton id="rActivity_button" onAction="#onRecentActClick" layoutX="32.0" layoutY="217.0" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="Search_button" layoutX="32.0" layoutY="271.0" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
+                  <JFXButton id="Search_button" onAction="#onSearchClick" layoutX="32.0" layoutY="271.0" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="Out_facilities_button" layoutX="32.0" layoutY="371.0" prefHeight="31.0" prefWidth="132.0" text="Our facilities" textFill="#fffdfd">
+                  <JFXButton id="Our_facilities_button" onAction="#onFacilitiesClick" layoutX="32.0" layoutY="371.0" prefHeight="31.0" prefWidth="132.0" text="Our facilities" textFill="#fffdfd">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -57,7 +59,7 @@
                         <Font name="Century Gothic" size="12.0" />
                      </font>
                   </JFXTextArea>
-                  <JFXButton id="user_button" layoutX="640.0" layoutY="22.0" prefHeight="48.0" prefWidth="60.0" text=" " />
+                  <JFXButton id="user_button" onAction="#onUserClick" layoutX="640.0" layoutY="22.0" prefHeight="48.0" prefWidth="60.0" text=" " />
                   <ImageView fitHeight="48.0" fitWidth="51.0" layoutX="646.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@obrazy/552721.png" />

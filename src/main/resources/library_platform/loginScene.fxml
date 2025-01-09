@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,7 +23,8 @@
                   <ImageView fitHeight="97.0" fitWidth="112.0" layoutX="50.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@obrazy/196039.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                   <JFXButton id="catogories_button" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -45,25 +45,13 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
       <Pane prefHeight="542.0" prefWidth="769.0">
          <children>
-            <Pane layoutY="17.0" prefHeight="97.0" prefWidth="728.0">
-               <children>
-                  <JFXTextArea id="search_textArea" layoutX="25.0" layoutY="29.0" prefHeight="39.0" prefWidth="228.0" text="Search:">
-                     <font>
-                        <Font name="Century Gothic" size="12.0" />
-                     </font>
-                  </JFXTextArea>
-                  <ImageView fitHeight="48.0" fitWidth="51.0" layoutX="646.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@obrazy/552721.png" />
-                     </image>
-                  </ImageView>
-                  <JFXButton id="user_button" layoutX="640.0" layoutY="22.0" onAction="#onLoginClick" prefHeight="48.0" prefWidth="60.0" text=" " />
-               </children></Pane>
+            <Pane layoutY="174.0" prefHeight="247.0" prefWidth="728.0" />
          </children>
       </Pane>
    </children>

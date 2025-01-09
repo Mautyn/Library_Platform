@@ -1,5 +1,4 @@
 module com.example.library_platform {
-    requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
 
@@ -7,6 +6,8 @@ module com.example.library_platform {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires java.desktop;
+    requires com.jfoenix;
 
     opens library_platform.Client to javafx.fxml;
     opens library_platform to javafx.fxml;
@@ -14,4 +15,6 @@ module com.example.library_platform {
     exports library_platform.Client;
     exports library_platform.Server;
     exports library_platform.Shared;
+    exports library_platform.Client.view;
+    opens library_platform.Client.view to javafx.fxml;
 }

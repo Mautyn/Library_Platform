@@ -7,6 +7,7 @@ module com.example.library_platform {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.desktop;
+    requires java.sql;
     requires com.jfoenix;
 
     opens library_platform.Client to javafx.fxml;
@@ -17,4 +18,5 @@ module com.example.library_platform {
     exports library_platform.Shared;
     exports library_platform.Client.view;
     opens library_platform.Client.view to javafx.fxml;
+    opens library_platform.Shared to javafx.fxml;
 }

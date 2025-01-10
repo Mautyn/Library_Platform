@@ -6,10 +6,10 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-
 import java.io.IOException;
 
 public class ClientController {
+
     @FXML
     private JFXButton main_page_button;
 
@@ -33,10 +33,18 @@ public class ClientController {
 
     @FXML
     public void onLoginClick(ActionEvent event) {
-        try {
-            SceneController.setScene(event, "/library_platform/loginScene.fxml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (LoginController.isLoggedIn) {
+            try {
+                SceneController.setScene(event, "/library_platform/userScene.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                SceneController.setScene(event, "/library_platform/loginScene.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

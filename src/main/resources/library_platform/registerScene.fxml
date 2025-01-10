@@ -54,40 +54,52 @@
         </VBox>
         <Pane prefHeight="542.0" prefWidth="769.0">
             <children>
-                <Pane layoutX="104.0" layoutY="60.0" prefHeight="422.0" prefWidth="506.0" style="-fx-background-color: #FFFFFF;">
+                <Pane layoutX="87.0" layoutY="48.0" prefHeight="460.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF;">
                     <children>
-                        <Pane layoutX="117.0" layoutY="-1.0" prefHeight="422.0" prefWidth="322.0" style="-fx-background-color: #0e636e;">
+                        <Pane layoutX="124.0" layoutY="-1.0" prefHeight="461.0" prefWidth="322.0" style="-fx-background-color: #0e636e;">
                             <children>
-                                <TextField id="RegisterLoginTextField" layoutX="66.0" layoutY="56.0" />
-                                <TextField id="RegisterPasswordTextField" layoutX="66.0" layoutY="186.0" />
-                                <Text fill="WHITE" layoutX="66.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                                <TextField fx:id="RegisterLoginTextField" layoutX="66.0" layoutY="155.0" />
+                                <TextField fx:id="RegisterPasswordTextField" layoutX="66.0" layoutY="271.0" />
+                                <Text fill="WHITE" layoutX="66.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Text>
-                                <Text fill="WHITE" layoutX="66.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email address" wrappingWidth="85.443359375">
+                                <Text fill="WHITE" layoutX="66.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email address" wrappingWidth="85.443359375">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Text>
-                        <TextField id="ConfirmLoginTextField" layoutX="66.0" layoutY="123.0" />
-                        <Text fill="WHITE" layoutX="66.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm email adress" wrappingWidth="132.0">
+                        <TextField fx:id="ConfirmLoginTextField" layoutX="66.0" layoutY="212.0" />
+                        <Text fill="WHITE" layoutX="66.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm email adress" wrappingWidth="132.0">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <TextField id="ConfirmPasswordTextField" layoutX="66.0" layoutY="252.0" />
-                              <JFXButton id="RegisterButton" onAction="#onRegisterClick" layoutX="104.0" layoutY="332.0" prefHeight="31.0" prefWidth="97.0" style="-fx-background-color: #7c7878;" text="Register" textFill="#fffdfd">
+                        <TextField fx:id="ConfirmPasswordTextField" layoutX="66.0" layoutY="326.0" />
+                              <JFXButton id="RegisterButton" layoutX="103.0" layoutY="401.0" onAction="#onRegisterClick" prefHeight="31.0" prefWidth="97.0" style="-fx-background-color: #7c7878;" text="Register" textFill="#fffdfd">
                                   <font>
                                       <Font name="System Bold" size="14.0" />
                                   </font>
                               </JFXButton>
-                        <Text fill="WHITE" layoutX="66.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm password" wrappingWidth="132.0">
+                        <Text fill="WHITE" layoutX="66.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm password" wrappingWidth="132.0">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <CheckBox id="TermsCheckBox" layoutX="66.0" layoutY="297.0" mnemonicParsing="false" text="Accept terms and conditions" textFill="WHITE" />
+                        <CheckBox fx:id="TermsCheckBox" layoutX="54.0" layoutY="368.0" mnemonicParsing="false" text="Accept terms and conditions" textFill="WHITE" />
+                        <TextField fx:id="lastNameTextField" layoutX="66.0" layoutY="95.0" />
+                        <Text fill="WHITE" layoutX="66.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last nasme" wrappingWidth="85.443359375">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="firstNameTextField" layoutX="66.0" layoutY="35.0" />
+                        <Text fill="WHITE" layoutX="66.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name" wrappingWidth="85.443359375">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
                             </children>
                         </Pane>
                     </children></Pane>

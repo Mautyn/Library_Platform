@@ -27,10 +27,9 @@ public class LoginController {
     @FXML
     private TextField PasswordTextField;
 
-    // Statyczna zmienna, która będzie przechowywać stan logowania użytkownika
-    public static boolean isLoggedIn = false; // Flaga, która będzie przechowywać informację o stanie logowania
-    public static String loggedInUserEmail = ""; // E-mail zalogowanego użytkownika, można przechować inne dane użytkownika
 
+    public static boolean isLoggedIn = false;
+    public static String loggedInUserEmail = "";
     public void onLog_inClick(ActionEvent event) throws IOException {
         String login = LoginTextField.getText();
         String password = PasswordTextField.getText();

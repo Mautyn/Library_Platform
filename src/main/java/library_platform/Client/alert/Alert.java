@@ -25,5 +25,5 @@ public interface Alert {
      * @param exception Wyjątek do wyświetlenia [Exception]
      * @return Obiekt typu Alert zawierający wyjątek do wyświetlenia
      */
-    default Alert setException(Exception exception) {return this;};
+    default Alert setException(Exception exception) {return this;}
 }

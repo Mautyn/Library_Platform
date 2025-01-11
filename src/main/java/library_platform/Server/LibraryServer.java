@@ -1,6 +1,6 @@
 package library_platform.Server;
 
-import library_platform.Client.view.ClientController;
+import library_platform.Client.view.MainPageController;
 import library_platform.Shared.Book;
 
 import java.io.*;

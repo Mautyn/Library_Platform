@@ -87,7 +87,10 @@ public class RegisterController {
                     int rowsAffected = insertStatement.executeUpdate();
 
                     if (rowsAffected > 0) {
-                        showAlert("Registration Successful", "You have successfully registered.");
+                        AlertBuilder alertBuilder = new AlertBuilder(AlertType.INFORMATION);
+                        alertBuilder.setTitle("Registration Successful")
+                                .setHeaderText("You have successfully registered.");
+                        alertBuilder.getAlert().showAndWait();
                         SceneController.setScene(event, "/library_platform/loginScene.fxml");
                     } else {
                         showAlert("Error", "An error occurred during registration.");

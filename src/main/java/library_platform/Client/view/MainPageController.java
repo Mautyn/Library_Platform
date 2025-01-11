@@ -8,22 +8,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import java.io.IOException;
 
-public class ClientController {
-
-    @FXML
-    private JFXButton main_page_button;
-
-    @FXML
-    private JFXButton catogories_button;
-
-    @FXML
-    private JFXButton rActivity_button;
-
-    @FXML
-    private JFXButton search_button;
-
-    @FXML
-    private JFXButton facilities_button;
+public class MainPageController {
 
     @FXML
     private JFXButton user_button;
@@ -47,4 +32,8 @@ public class ClientController {
             }
         }
     }
+
+
+
+
 }

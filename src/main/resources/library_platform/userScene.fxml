@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.LoginController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.UserController">
     <children>
         <VBox prefHeight="542.0" prefWidth="223.0">
             <children>
@@ -55,7 +55,7 @@
                     <children>
                         <Pane layoutX="86.0" prefHeight="327.0" prefWidth="443.0" style="-fx-background-color: #0e636e;">
                      <children>
-                        <JFXButton id="logOutButton" layoutX="349.0" layoutY="274.0" style="-fx-background-color: #FFFFFF;" text="Log out">
+                        <JFXButton id="logOutButton" onAction="#onLogOutClick" layoutX="349.0" layoutY="274.0" style="-fx-background-color: #FFFFFF;" text="Log out">
                            <font>
                               <Font name="System Italic" size="15.0" />
                            </font>

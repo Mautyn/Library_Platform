@@ -19,6 +19,14 @@ public class FacilitiesController {
 
     }
 
+    public void onSearchClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/searchScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void onCategoriesClick(ActionEvent actionEvent) {
         try {
             SceneController.setScene(actionEvent, "/library_platform/categoriesScene.fxml");

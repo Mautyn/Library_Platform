@@ -1,8 +1,13 @@
 package library_platform.Shared;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Book implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 21372137;
+
     private Integer id;
     private String title;
     private String author;

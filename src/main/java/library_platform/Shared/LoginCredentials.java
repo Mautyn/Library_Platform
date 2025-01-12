@@ -1,8 +1,13 @@
 package library_platform.Shared;
+import java.io.Serial;
 import java.io.Serializable;
 
 /** klasa serializująca dane logowania w celu wysłania ich do serwera */
 public class LoginCredentials implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 692137420;
+
     private String login;
     private String haslo;
     private String firstName;

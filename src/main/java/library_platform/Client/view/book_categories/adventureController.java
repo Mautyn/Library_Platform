@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class adventureController {
     @FXML
-    private TableView<Book> tableView;
+    private TableView tableView;
 
     @FXML
     private TableColumn<Book, String> titleColumn;
@@ -19,7 +19,7 @@ public class adventureController {
     @FXML
     private TableColumn<Book, String> authorColumn;
 
-    private ObservableList<Book> bookList;
+    //private ObservableList<Book> bookList;
 
 
 

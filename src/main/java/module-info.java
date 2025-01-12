@@ -9,6 +9,7 @@ module com.example.library_platform {
     requires java.desktop;
     requires java.sql;
     requires com.jfoenix;
+    requires jdk.httpserver;
 
     opens library_platform.Client to javafx.fxml;
     opens library_platform.Client.view.book_categories to javafx.fxml;

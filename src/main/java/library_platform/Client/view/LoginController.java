@@ -1,6 +1,7 @@
 package library_platform.Client.view;
 
 import javafx.scene.control.PasswordField;
+import library_platform.Client.ConnectionHandler;
 import library_platform.Shared.DatabaseConnection;
 import com.jfoenix.controls.JFXButton;
 import library_platform.Client.SceneController;
@@ -10,6 +11,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import library_platform.Client.alert.AlertBuilder;
 import javafx.scene.control.TextField;
+import library_platform.Shared.LoginCredentials;
+import library_platform.Shared.Request;
 
 import java.sql.*;
 import java.io.IOException;
@@ -36,26 +39,25 @@ public class LoginController {
         String login = LoginTextField.getText();
         String password = PasswordTextField.getText();
 
-        String query = "SELECT * FROM uzytkownik WHERE E_mail = ? AND Haslo = ?";
+        Request request = new Request("LOG_IN");
+        LoginCredentials loginCredentials = new LoginCredentials(login, password);
+        ConnectionHandler serverConnection = ConnectionHandler.getInstance();
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        serverConnection.sendObjectToServer(request);
+        serverConnection.sendObjectToServer(loginCredentials);
+        Request answer = (Request) serverConnection.readObjectFromServer();
 
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, password);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                isLoggedIn = true;
-                loggedInUserEmail = login;
-
-                SceneController.setScene(event, "/library_platform/hello-view.fxml");
-            } else {
-                AlertBuilder.showAlert("Login failed", "Invalid login od password", javafx.scene.control.Alert.AlertType.ERROR);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(answer.getContent().equals("SUCCESS")) {
+            isLoggedIn = true;
+            loggedInUserEmail = login;
+            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+        } else if (answer.getContent().equals("INVALID")) {
+            isLoggedIn = false;
+            loggedInUserEmail = null;
+            AlertBuilder.showAlert("Login failed", "Invalid login od password", javafx.scene.control.Alert.AlertType.ERROR);
+        } else {
+            isLoggedIn = false;
+            loggedInUserEmail = null;
             AlertBuilder.showAlert("Error", "An error occurred while logging in.", javafx.scene.control.Alert.AlertType.ERROR);
         }
     }

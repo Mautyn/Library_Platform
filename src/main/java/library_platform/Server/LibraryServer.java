@@ -71,9 +71,11 @@ public class LibraryServer {
                             out.writeObject(books);
                             break;
                         case "BORROW_BOOK":
-                            String title = (String) in.readObject();
-                            boolean success = borrowBook(title);
-                            out.writeObject(success);
+                            if(loggedIn) {
+                                String title = (String) in.readObject();
+                                boolean success = borrowBook(title);
+                                out.writeObject(success);
+                            }
                             break;
                         default:
                             out.writeObject(new Request("UNKNOWN_REQUEST"));

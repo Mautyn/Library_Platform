@@ -17,10 +17,14 @@ public class Book implements Serializable {
     private boolean isBorrowed;
 
     public Book(String title, String author, String year, String publisher) {
-
         this.author = author;
         this.year = year;
         this.publisher = publisher;
+        this.title = title;
+        this.isBorrowed = false;
+    }
+
+    public Book(String title) {
         this.title = title;
         this.isBorrowed = false;
     }

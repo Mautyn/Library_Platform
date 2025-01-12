@@ -11,6 +11,7 @@ module com.example.library_platform {
     requires com.jfoenix;
 
     opens library_platform.Client to javafx.fxml;
+    opens library_platform.Client.view.book_categories to javafx.fxml;
     opens library_platform to javafx.fxml;
 
     exports library_platform.Client;

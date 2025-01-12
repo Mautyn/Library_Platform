@@ -6,17 +6,30 @@ public class Book implements Serializable {
     private Integer id;
     private String title;
     private String author;
+    private String year;
+    private String publisher;
     private String category;
     private boolean isBorrowed;
 
-    public Book(String title) {
+    public Book(String title, String author, String year, String publisher) {
 
+        this.author = author;
+        this.year = year;
+        this.publisher = publisher;
         this.title = title;
         this.isBorrowed = false;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getPublisher() {
+        return publisher;
     }
 
     public boolean isBorrowed() {

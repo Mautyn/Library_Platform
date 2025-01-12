@@ -2,12 +2,10 @@ package library_platform.Client;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import java.io.*;
+
 
 public class LibraryClient extends Application {
 
@@ -24,9 +22,7 @@ public class LibraryClient extends Application {
         connectionHandlerInstance.establishConnection();
     }
 
-
     public static void main(String[] args) {
-
         launch(args);
     }
 }

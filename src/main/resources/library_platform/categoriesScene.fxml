@@ -16,7 +16,7 @@
             <children>
                 <AnchorPane id="side_anhorPane" prefHeight="542.0" prefWidth="201.0" style="-fx-background-color: #0e636e;" styleClass="side_anhorPane" stylesheets="@obrazy/style.css">
                     <children>
-                        <JFXButton id="main_page_button" onAction="#onMainPageClick" layoutX="25.0" layoutY="135.0" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Main page" textFill="WHITE">
+                        <JFXButton id="main_page_button" layoutX="25.0" layoutY="135.0" onAction="#onMainPageClick" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Main page" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
@@ -25,22 +25,22 @@
                             <image>
                                 <Image url="@obrazy/196039.png" />
                             </image></ImageView>
-                        <JFXButton id="catogories_button" onAction="#onCategoriesClick" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
+                        <JFXButton id="catogories_button" layoutX="32.0" layoutY="319.0" onAction="#onCategoriesClick" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton id="rActivity_button" onAction="#onRecentClick" layoutX="32.0" layoutY="217.0" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
+                        <JFXButton id="rActivity_button" layoutX="32.0" layoutY="217.0" onAction="#onRecentClick" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton id="search_button" onAction="#onSearchClick" layoutX="32.0" layoutY="271.0" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
+                        <JFXButton id="search_button" layoutX="32.0" layoutY="271.0" onAction="#onSearchClick" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton id="facilities_button" onAction="#onFacilitiesClick" layoutX="32.0" layoutY="371.0" prefHeight="31.0" prefWidth="132.0" text="Our facilities" textFill="#fffdfd">
+                        <JFXButton id="facilities_button" layoutX="32.0" layoutY="371.0" onAction="#onFacilitiesClick" prefHeight="31.0" prefWidth="132.0" text="Our facilities" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
@@ -60,52 +60,52 @@
                     </children></Pane>
             <Pane id="categories_pane" layoutX="44.0" layoutY="114.0" prefHeight="398.0" prefWidth="589.0" style="-fx-background-color: #FFFFFF;" styleClass="categories_pane" stylesheets="@obrazy/style.css">
                <children>
-                  <JFXButton id="adventureButton" layoutX="72.0" layoutY="48.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="ADVENTURE" textAlignment="RIGHT" textFill="WHITE">
+                  <JFXButton fx:id="adventureButton" layoutX="72.0" layoutY="48.0" onAction="#onAdventureClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="ADVENTURE" textAlignment="RIGHT" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="classicButton" layoutX="72.0" layoutY="116.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="CLASSIC" textFill="WHITE">
+                  <JFXButton id="classicButton" layoutX="72.0" layoutY="116.0" onAction="#onClassicClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="CLASSIC" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="crimeButton" layoutX="72.0" layoutY="185.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="CRIME" textFill="WHITE">
+                  <JFXButton id="crimeButton" layoutX="72.0" layoutY="185.0" onAction="#onCrimeClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="CRIME" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="fantasyButton" layoutX="72.0" layoutY="259.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="FANTASY" textFill="WHITE">
+                  <JFXButton id="fantasyButton" layoutX="72.0" layoutY="259.0" onAction="#onFantasyClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="FANTASY" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="religionButton" layoutX="332.0" layoutY="182.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="RELIGION" textFill="WHITE">
+                  <JFXButton id="romanticButton" layoutX="332.0" layoutY="182.0" onAction="#onRomanticClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="ROMANTIC" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="poetryButton" layoutX="332.0" layoutY="45.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="POETRY" textFill="WHITE">
+                  <JFXButton id="biographyButton" layoutX="332.0" layoutY="45.0" onAction="#onBiographyClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="BIOGRAPHY" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="scienceButton" layoutX="332.0" layoutY="256.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="SCIENCE" textFill="WHITE">
+                  <JFXButton id="scienceButton" layoutX="332.0" layoutY="256.0" onAction="#onScienceClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="SCIENCE FICTION" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="philosophyButton" layoutX="72.0" layoutY="328.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="PHILOSOPHY" textFill="WHITE">
+                  <JFXButton id="historyButton" layoutX="72.0" layoutY="328.0" onAction="#onHistoryClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="HISTORY" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="psychologyButton" layoutX="332.0" layoutY="113.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="PSYCHOLOGY" textFill="WHITE">
+                  <JFXButton id="horrorButton" layoutX="332.0" layoutY="113.0" onAction="#onHorrorClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="HORROR" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="thrillerButton" layoutX="332.0" layoutY="325.0" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="THRILLER" textFill="WHITE">
+                  <JFXButton id="thrillerButton" layoutX="332.0" layoutY="325.0" onAction="#onThrillerClick" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3a8c79;" text="THRILLER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

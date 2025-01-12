@@ -15,10 +15,6 @@ public class LibraryServer {
         try (ServerSocket serverSocket = new ServerSocket(54321)) {
             System.out.println("Server started on port 54321...");
 
-            books.add(new Book("The Great Gatsby"));
-            books.add(new Book("1984"));
-            books.add(new Book("To Kill a Mockingbird"));
-
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 new ClientHandler(clientSocket).start();

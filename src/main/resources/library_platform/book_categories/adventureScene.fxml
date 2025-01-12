@@ -62,12 +62,12 @@
                     </children></Pane>
                 <Pane id="categories_pane" layoutX="44.0" layoutY="114.0" prefHeight="398.0" prefWidth="589.0" style="-fx-background-color: #FFFFFF;" styleClass="categories_pane" stylesheets="@../obrazy/style.css">
                <children>
-                  <TableView id="tableView" layoutX="20.0" layoutY="14.0" prefHeight="364.0" prefWidth="450.0">
+                  <TableView id="tableView" fx:id="tableView" layoutX="-5.0" layoutY="-4.0" prefHeight="404.0" prefWidth="597.0">
                     <columns>
-                      <TableColumn id="titleColumn" prefWidth="119.0" text="book title" />
-                      <TableColumn id="autorColumn" prefWidth="109.0" text="autor" />
-                        <TableColumn id="yearColumn" prefWidth="116.0" text="year of publication" />
-                        <TableColumn id="publisherColumn" prefWidth="105.0" text="publisher" />
+                      <TableColumn id="titleColumn" fx:id="titleColumn" prefWidth="195.1999626159668" text="book title" />
+                      <TableColumn id="authorColumn" fx:id="authorColumn" prefWidth="125.60005187988281" text="author" />
+                        <TableColumn id="yearColumn" fx:id="yearColumn" prefWidth="111.20001220703125" text="year of publication" />
+                        <TableColumn id="publisherColumn" fx:id="publisherColumn" prefWidth="169.5999755859375" text="publisher" />
                     </columns>
                   </TableView>
                </children>

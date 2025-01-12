@@ -64,6 +64,8 @@ final public class AlertBuilder implements Alert {
         return this;
     }
 
+
+
     /**
      * Metoda wywoływana przez kontrolery GUI po to, aby wyświetlić błąd
      * w oknie alertu
@@ -71,5 +73,12 @@ final public class AlertBuilder implements Alert {
      */
     public javafx.scene.control.Alert getAlert() {
         return alert;
+    }
+
+    public static void showAlert(String title, String message, javafx.scene.control.Alert.AlertType alertType) {
+        AlertBuilder alertBuilder = new AlertBuilder(alertType);
+        alertBuilder.setTitle(title)
+                .setHeaderText(message);
+        alertBuilder.getAlert().showAndWait();
     }
 }

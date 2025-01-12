@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
@@ -30,10 +31,10 @@ public class RegisterController {
     private TextField ConfirmLoginTextField;
 
     @FXML
-    private TextField RegisterPasswordTextField;
+    private PasswordField RegisterPasswordTextField;
 
     @FXML
-    private TextField ConfirmPasswordTextField;
+    private PasswordField ConfirmPasswordTextField;
 
     @FXML
     private TextField firstNameTextField;
@@ -50,17 +51,20 @@ public class RegisterController {
         String lastName = lastNameTextField.getText();
 
         if (!login.equals(confirmLogin)) {
-            showAlert("Login Error", "The login fields do not match.");
+            AlertBuilder.showAlert("Password Error", "The password fields do not match.",
+                    javafx.scene.control.Alert.AlertType.ERROR);
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            showAlert("Password Error", "The password fields do not match.");
+            AlertBuilder.showAlert("Password Error", "The password fields do not match.",
+                    javafx.scene.control.Alert.AlertType.ERROR);
             return;
         }
 
         if (!TermsCheckBox.isSelected()) {
-            showAlert("Terms Error", "You must accept the terms and conditions.");
+            AlertBuilder.showAlert("Terms Error", "You must accept the terms and conditions.",
+                    javafx.scene.control.Alert.AlertType.ERROR);
             return;
         }
 
@@ -71,7 +75,8 @@ public class RegisterController {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                showAlert("Registration Error", "A user with this email already exists.");
+                AlertBuilder.showAlert("Registration Error", "A user with this email already exists.",
+                        javafx.scene.control.Alert.AlertType.ERROR);
             } else {
                 String insertQuery = "INSERT INTO uzytkownik (Imie, Nazwisko, E_mail, Haslo, Typ_uzytkownika, Data_rejestracji, Status_konta) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -93,20 +98,46 @@ public class RegisterController {
                         alertBuilder.getAlert().showAndWait();
                         SceneController.setScene(event, "/library_platform/loginScene.fxml");
                     } else {
-                        showAlert("Error", "An error occurred during registration.");
+                        AlertBuilder.showAlert("Error", "An error occurred during registration.",
+                                javafx.scene.control.Alert.AlertType.ERROR);
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Database Error", "An error occurred while interacting with the database.");
+            AlertBuilder.showAlert("Database Error", "An error occurred while interacting with the database.",
+                    javafx.scene.control.Alert.AlertType.ERROR);        }
+    }
+    public void onFacilitiesClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/facilitiesScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void onRecentClick(ActionEvent actionEvent) {
+    }
+    public void onCategoriesClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/categoriesScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void showAlert(String title, String message) {
-        AlertBuilder alertBuilder = new AlertBuilder(AlertType.ERROR);
-        alertBuilder.setTitle(title)
-                .setHeaderText(message);
-        alertBuilder.getAlert().showAndWait();
+    public void onMainPageClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onSearchClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/searchScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

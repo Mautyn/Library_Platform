@@ -1,41 +1,27 @@
-package library_platform.Client.view;
+package library_platform.Client.view.book_categories;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
 import library_platform.Client.SceneController;
+import javafx.fxml.FXML;
+import library_platform.Shared.Book;
 
+import javax.swing.text.TableView;
 import java.io.IOException;
 
-public class CategoriesController {
-    private JFXButton adventureButton;
+public class adventureController {
+    @FXML
+    private TableView<Book> tableView;
 
     @FXML
-    private JFXButton classicButton;
+    private TableColumn<Book, String> titleColumn;
 
     @FXML
-    private JFXButton crimeButton;
+    private TableColumn<Book, String> authorColumn;
 
-    @FXML
-    private JFXButton fantasyButton;
+    private ObservableList<Book> bookList;
 
-    @FXML
-    private JFXButton philosophyButton;
 
-    @FXML
-    private JFXButton poetryButton;
-
-    @FXML
-    private JFXButton psychologyButton;
-
-    @FXML
-    private JFXButton religionButton;
-
-    @FXML
-    private JFXButton scienceButton;
-
-    @FXML
-    private JFXButton thrillerButton;
 
     public void onSearchClick(ActionEvent actionEvent) {
         try {

@@ -23,12 +23,60 @@ public class UserController {
     public void onLogOutClick(ActionEvent event) {
         try {
             LoginController.isLoggedIn = false;
-            AlertBuilder alert = new AlertBuilder(Alert.AlertType.INFORMATION);
-            alert.setTitle("Log Out");
-            alert.setHeaderText("You are logged out");
-            alert.getAlert().showAndWait();
+            AlertBuilder.showAlert("Log out", "You have been logged out.",
+                    javafx.scene.control.Alert.AlertType.INFORMATION);
             SceneController.setScene(event, "/library_platform/hello-view.fxml");
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onborrowedBooksClick(ActionEvent event) {
+        try {
+
+            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onreturnedBooksClick(ActionEvent event) {
+        try {
+
+            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onFacilitiesClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/facilitiesScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void onRecentClick(ActionEvent actionEvent) {
+    }
+    public void onCategoriesClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/categoriesScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void onMainPageClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onSearchClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/searchScene.fxml");
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

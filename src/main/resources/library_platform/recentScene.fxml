@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.UserController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.MainPageController">
     <children>
         <VBox prefHeight="542.0" prefWidth="223.0">
             <children>
@@ -25,7 +26,7 @@
                                 <Image url="@obrazy/196039.png" />
                             </image>
                         </ImageView>
-                        <JFXButton id="catogories_button" onAction="#onCategoriesClick" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
+                        <JFXButton id="catogories_button"  onAction="#onCategoriesClick" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
@@ -35,7 +36,7 @@
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton id="search_button" onAction="#onSearchClick" layoutX="32.0" layoutY="271.0" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
+                        <JFXButton id="search_button" onAction="#onSearchClick"  layoutX="32.0" layoutY="271.0" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
@@ -47,36 +48,22 @@
                         </JFXButton>
                     </children>
                 </AnchorPane>
-            </children>
-        </VBox>
+            </children></VBox>
         <Pane prefHeight="542.0" prefWidth="769.0">
             <children>
-                <Pane layoutX="62.0" layoutY="94.0" prefHeight="327.0" prefWidth="615.0" style="-fx-background-color: #FFFFFF;">
+                <Pane layoutY="17.0" prefHeight="97.0" prefWidth="728.0">
                     <children>
-                        <Pane layoutX="86.0" prefHeight="327.0" prefWidth="443.0" style="-fx-background-color: #0e636e;">
-                     <children>
-                        <JFXButton id="logOutButton" onAction="#onLogOutClick" layoutX="349.0" layoutY="274.0" style="-fx-background-color: #FFFFFF;" text="Log out">
-                           <font>
-                              <Font name="System Italic" size="15.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton id="borrowedBooksButton" onAction="#onborrowedBooksClick" layoutX="154.0" layoutY="178.0" style="-fx-background-color: #FFFFFF;" text="borrowed books">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton id="returnedBooksButton" onAction="#onreturnedBooksClick" layoutX="154.0" layoutY="223.0" prefHeight="31.0" prefWidth="136.0" style="-fx-background-color: #FFFFFF;" text="returned books">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </JFXButton>
-                        <ImageView fitHeight="97.0" fitWidth="103.0" layoutX="301.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@obrazy/552721.png" />
-                           </image>
+                        <JFXTextArea id="search_textArea" layoutX="25.0" layoutY="29.0" prefHeight="39.0" prefWidth="228.0" text="Search:">
+                            <font>
+                                <Font name="Century Gothic" size="12.0" />
+                            </font>
+                        </JFXTextArea>
+                        <ImageView fitHeight="69.0" fitWidth="86.0" layoutX="640.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@obrazy/552721.png" />
+                            </image>
                         </ImageView>
-                     </children>
-                        </Pane>
+                        <JFXButton id="user_button" layoutX="640.0" layoutY="14.0" onAction="#onLoginClick" prefHeight="69.0" prefWidth="69.0" text=" " />
                     </children></Pane>
             </children>
         </Pane>

@@ -1,5 +1,6 @@
 package library_platform.Client.view;
 
+import javafx.scene.control.PasswordField;
 import library_platform.Shared.DatabaseConnection;
 import com.jfoenix.controls.JFXButton;
 import library_platform.Client.SceneController;
@@ -25,7 +26,7 @@ public class LoginController {
     private TextField LoginTextField;
 
     @FXML
-    private TextField PasswordTextField;
+    private PasswordField PasswordTextField;
 
 
     public static boolean isLoggedIn = false;
@@ -51,20 +52,11 @@ public class LoginController {
 
                 SceneController.setScene(event, "/library_platform/hello-view.fxml");
             } else {
-                AlertBuilder alertBuilder = new AlertBuilder(AlertType.ERROR);
-                alertBuilder
-                        .setTitle("Login Failed")
-                        .setHeaderText("Invalid login or password.");
-                alertBuilder.getAlert().showAndWait();
+                AlertBuilder.showAlert("Login failed", "Invalid login od password", javafx.scene.control.Alert.AlertType.ERROR);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            AlertBuilder alertBuilder = new AlertBuilder(AlertType.ERROR);
-            alertBuilder
-                    .setTitle("Error")
-                    .setHeaderText("An error occurred while logging in.")
-                    .setException(e);
-            alertBuilder.getAlert().showAndWait();
+            AlertBuilder.showAlert("Error", "An error occurred while logging in.", javafx.scene.control.Alert.AlertType.ERROR);
         }
     }
 
@@ -72,6 +64,40 @@ public class LoginController {
         try {
             SceneController.setScene(event, "/library_platform/registerScene.fxml");
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onFacilitiesClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/facilitiesScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onRecentClick(ActionEvent actionEvent) {
+    }
+    public void onCategoriesClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/categoriesScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onMainPageClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onSearchClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/searchScene.fxml");
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

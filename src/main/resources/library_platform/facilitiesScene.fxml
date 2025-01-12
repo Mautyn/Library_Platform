@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.FacilitiesController">
+    <children>
+        <VBox prefHeight="542.0" prefWidth="223.0">
+            <children>
+                <AnchorPane id="side_anhorPane" prefHeight="542.0" prefWidth="201.0" style="-fx-background-color: #0e636e;" styleClass="side_anhorPane" stylesheets="@obrazy/style.css">
+                    <children>
+                        <JFXButton id="main_page_button" onAction="#onMainPageClick" layoutX="25.0" layoutY="135.0" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Main page" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </JFXButton>
+                        <ImageView fitHeight="97.0" fitWidth="112.0" layoutX="50.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@obrazy/196039.png" />
+                            </image></ImageView>
+                        <JFXButton id="catogories_button" onAction="#onCategoriesClick" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </JFXButton>
+                        <JFXButton id="rActivity_button" onAction="#onRecentClick" layoutX="32.0" layoutY="217.0" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </JFXButton>
+                        <JFXButton id="search_button" onAction="#onSearchClick" layoutX="32.0" layoutY="271.0" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </JFXButton>
+                        <JFXButton id="facilities_button" onAction="#onFacilitiesClick" layoutX="32.0" layoutY="371.0" prefHeight="31.0" prefWidth="132.0" text="Our facilities" textFill="#fffdfd">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </JFXButton>
+                    </children></AnchorPane>
+            </children>
+        </VBox>
+        <Pane prefHeight="542.0" prefWidth="769.0">
+            <children>
+                <Pane layoutY="17.0" prefHeight="97.0" prefWidth="728.0">
+                    <children>
+                        <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Our facilities" wrappingWidth="496.0">
+                            <font>
+                                <Font size="52.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+                <Pane id="facilities_pane" layoutX="44.0" layoutY="114.0" prefHeight="398.0" prefWidth="589.0">
+                    <children>
+                        <VBox style="-fx-spacing: 30;">
+                            <VBox style="-fx-spacing: 5;">
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kraków Czyżyny" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="28.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jana Pawła II 120B Kraków, tel. +48 692 137 420" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Godziny otwarcia: pon-pt: 8:00 - 20:00" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Text>
+                            </VBox>
+                            <VBox style="-fx-spacing: 5;">
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kraków Bronowice" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="28.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stańczyka 40 Kraków, tel. +48 694 202 137" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Godziny otwarcia: pon-pt: 8:00 - 20:00" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Text>
+                            </VBox>
+                            <VBox style="-fx-spacing: 5;">
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kraków Ruczaj" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="28.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dr. Jana Piltza 82 Kraków, tel. +48 690 132 499" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Godziny otwarcia: pon-pt: 8:00 - 20:00" wrappingWidth="496.0">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Text>
+                            </VBox>
+                        </VBox>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+    </children>
+</HBox>

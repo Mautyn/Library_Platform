@@ -1,5 +1,7 @@
 package library_platform.Server;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
 import library_platform.Client.view.LoginController;
@@ -18,15 +20,15 @@ import java.util.*;
 
 
 public class LibraryServer {
-    private static List<Book> books = Collections.synchronizedList(new ArrayList<>());
+    //private static List<Book> books = Collections.synchronizedList(new ArrayList<>());
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(54321)) {
             System.out.println("Server started on port 54321...");
 
-            books.add(new Book("The Great Gatsby"));
-            books.add(new Book("1984"));
-            books.add(new Book("To Kill a Mockingbird"));
+//            books.add(new Book("The Great Gatsby"));
+//            books.add(new Book("1984"));
+//            books.add(new Book("To Kill a Mockingbird"));
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -40,6 +42,7 @@ public class LibraryServer {
     private static class ClientHandler extends Thread {
         private Socket clientSocket;
         private boolean loggedIn;
+        ObservableList<Book> books;
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
@@ -67,6 +70,8 @@ public class LibraryServer {
                             loggedIn = registerUser(credentials);
                             break;
                         case "GET_BOOKS":
+                            String searchQuery = ((Request) in.readObject()).getContent();
+                            books = FXCollections.observableArrayList(getBooks(searchQuery));
                             out.writeObject(books);
                             break;
                         case "BORROW_BOOK":
@@ -170,6 +175,36 @@ public class LibraryServer {
                 e.printStackTrace();
             }
             return loggedIn;
+        }
+
+        private List<Book> getBooks(String searchQuery) {
+            String query;
+            if(searchQuery.isEmpty()) {
+                query = """
+                SELECT * FROM passwords;
+                """;
+            } else {
+                query = """
+                        SELECT * FROM passwords WHERE Tytul LIKE '%'?'%' OR Autor LIKE '%'?'%' OR Gatunek LIKE '%'?'%';
+                        """;
+            }
+            List<Book> bookList = new ArrayList<>();
+            try {
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet rs = preparedStatement.executeQuery();
+                while(rs.next()) {
+                    Book book = new Book(rs.getString("Tytul"));
+                    book.setId(rs.getInt("ID_ksiazki"));
+                    book.setCategory(rs.getString("Gatunek"));
+                    book.setAuthor(rs.getString("Autor"));
+                    bookList.add(book);
+                }
+
+            } catch (Exception exception) {
+                throw new RuntimeException(exception);
+            }
+            return bookList;
         }
     }
 }

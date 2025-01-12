@@ -35,12 +35,7 @@ public class ConnectionHandler {
             objectOutput = new ObjectOutputStream(socket.getOutputStream());
             objectInput = new ObjectInputStream(socket.getInputStream());
         } catch (Exception e) {
-            AlertBuilder alertBuilder = new AlertBuilder(Alert.AlertType.ERROR);
-            alertBuilder
-                    .setTitle("Error")
-                    .setHeaderText("Server connection error")
-                    .setException(e);
-            alertBuilder.getAlert().showAndWait();
+            AlertBuilder.showAlert("Error", "Server connection error", javafx.scene.control.Alert.AlertType.ERROR);
             System.exit(0);
         }
     }

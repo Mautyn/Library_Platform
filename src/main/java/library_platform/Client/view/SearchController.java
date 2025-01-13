@@ -13,6 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import library_platform.Client.ConnectionHandler;
 import library_platform.Client.SceneController;
 import library_platform.Shared.Book;
+import library_platform.Shared.Converters;
+import library_platform.Shared.Request;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,36 +52,36 @@ public class SearchController implements Initializable {
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
         categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            onSearchFieldChange(newValue);
+        });
+
         // obsługa wyszukiwania
         FilteredList<Book> filteredBooks = new FilteredList<>(books, p -> true);
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredBooks.setPredicate(book -> {
-                // If filter text is empty, display none.
-                if (newValue == null || newValue.isEmpty()) {
-                    return false;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-                if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (book.getAuthor().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (book.getCategory().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
+
         // obsługa sortowania
         SortedList<Book> sortedBooks = new SortedList<>(filteredBooks);
         sortedBooks.comparatorProperty().bind(booksTable.comparatorProperty());
         booksTable.setItems(sortedBooks);
+
+        onSearchFieldChange("");
+
     }
-    //todo
-    private void getBooks() {
-        ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
-        //connectionHandler.sendObjectToServer(new Request("update"));
-        //commBooks = (ArrayList<CommBook>) connectionHandler.readObjectFromServer();
-        //books.setAll(FXCollections.observableArrayList(Converters.convertToObservable(commBooks)));
+
+    public void onSearchFieldChange(String searchQuery) {
+        ConnectionHandler serverConnection = ConnectionHandler.getInstance();
+        Request request = new Request("GET_BOOKS");
+        Request searchMode = new Request("FULL");
+        Request query = new Request(searchQuery);
+
+        serverConnection.sendObjectToServer(request);
+        serverConnection.sendObjectToServer(searchMode);
+        serverConnection.sendObjectToServer(query);
+
+        ArrayList<Book> booksArrayList = (ArrayList<Book>) serverConnection.readObjectFromServer();
+        ObservableList<Book> booksObservableList = FXCollections.observableList(Converters.convertToObservable(booksArrayList));
+        booksTable.setItems(booksObservableList);
     }
     public void onFacilitiesClick(ActionEvent actionEvent) {
         try {

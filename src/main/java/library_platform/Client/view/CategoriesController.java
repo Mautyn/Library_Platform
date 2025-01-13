@@ -5,16 +5,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
+import library_platform.Client.ConnectionHandler;
 import library_platform.Client.SceneController;
+import library_platform.Client.alert.AlertBuilder;
 import library_platform.Shared.Book;
+import library_platform.Shared.Converters;
 import library_platform.Shared.DatabaseConnection;
+import library_platform.Shared.Request;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class CategoriesController {
     @FXML
@@ -163,25 +169,18 @@ public class CategoriesController {
     }
 
     public void loadBooksFromDatabase(TableView<Book> tableView, String sortBy) {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT Tytul, Autor, Rok_wydania, Wydawnictwo FROM ksiazka where Gatunek = '" + sortBy + "'";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+        ConnectionHandler serverConnection = ConnectionHandler.getInstance();
+        Request request = new Request("GET_BOOKS");
+        Request searchMode = new Request("CATEGORIES");
+        Request searchQuery = new Request(sortBy);
 
-            ObservableList<Book> bookList;
-            bookList = FXCollections.observableArrayList();
-            while (resultSet.next()) {
-                bookList.add(new Book(
-                        resultSet.getString("Tytul"),
-                        resultSet.getString("Autor"),
-                        resultSet.getString("Rok_wydania"),
-                        resultSet.getString("Wydawnictwo")
-                ));
-            }
+        serverConnection.sendObjectToServer(request);
+        serverConnection.sendObjectToServer(searchMode);
+        serverConnection.sendObjectToServer(searchQuery);
 
-            tableView.setItems(bookList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ArrayList<Book> booksArrayList = (ArrayList<Book>) serverConnection.readObjectFromServer();
+        ObservableList<Book> booksObservableList = FXCollections.observableList(Converters.convertToObservable(booksArrayList));
+        tableView.setItems(booksObservableList);
+
     }
 }

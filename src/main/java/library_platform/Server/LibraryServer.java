@@ -2,6 +2,7 @@ package library_platform.Server;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import library_platform.Client.ConnectionHandler;
 import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
 import library_platform.Client.view.LoginController;
@@ -38,7 +39,8 @@ public class LibraryServer {
     private static class ClientHandler extends Thread {
         private Socket clientSocket;
         private boolean loggedIn;
-        ArrayList<Book> books;
+        ArrayList<Book> queryBooks;
+        ArrayList<Book> bookCopies;
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
@@ -69,15 +71,14 @@ public class LibraryServer {
                         case "GET_BOOKS":
                             String searchMode = ((Request) in.readObject()).getContent();
                             String searchQuery = ((Request) in.readObject()).getContent();
-                            books = getBooks(searchMode, searchQuery);
-                            out.writeObject(books);
-
+                            queryBooks = getBooks(searchMode, searchQuery);
+                            out.writeObject(queryBooks);
                             break;
                         case "BORROW_BOOK":
                             if(loggedIn) {
-                                String title = (String) in.readObject();
-                                boolean success = borrowBook(title);
-                                out.writeObject(success);
+//                                String title = (String) in.readObject();
+//                                boolean success = borrowBook(title);
+//                                out.writeObject(success);
                             }
                             break;
                         default:
@@ -89,17 +90,30 @@ public class LibraryServer {
             }
         }
 
-        private boolean borrowBook(String title) {
-            synchronized (books) {
-                for (Book book : books) {
-                    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {
-                        book.borrow();
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+//        private boolean borrowBook(String title) {
+//            synchronized (books) {
+//                for (Book book : books) {
+//                    if (book.getTitle().equalsIgnoreCase(title) && !book.isBorrowed()) {
+//                        book.borrow();
+//                        return true;
+//                    }
+//                }
+//            }
+//            return false;
+//        }
+
+//        private void setBookCopies() {
+//            String query = "SELECT * FROM egzemplarz";
+//            try {
+//                Connection connection = DatabaseConnection.getConnection();
+//                PreparedStatement ps = connection.prepareStatement(query);
+//                ResultSet resultSet = ps.executeQuery();
+//                if(resultSet.next()) {
+//                    Book b = new Book;
+//                    bookCopies.add();
+//                }
+//            }
+//        }
 
         private boolean checkLogin(LoginCredentials credentials) {
             String query = "SELECT * FROM uzytkownik WHERE E_mail = ? AND Haslo = ?";

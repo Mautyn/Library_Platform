@@ -18,7 +18,10 @@ public class Book implements Serializable {
     private String publisher;
     private String category;
     private boolean isBorrowed;
-    private BooleanProperty selected = new SimpleBooleanProperty(false);
+
+    // to było simpleBooleanProperty ale zmieniłem na boolean bo sie nie serializowało
+    // jeśli checkbox sie wyjebie to mozliwe ze przez to
+    private boolean selected;
 
 
     public Book(String title, String author, String year, String publisher) {

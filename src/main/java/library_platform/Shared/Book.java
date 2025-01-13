@@ -1,5 +1,8 @@
 package library_platform.Shared;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -15,6 +18,8 @@ public class Book implements Serializable {
     private String publisher;
     private String category;
     private boolean isBorrowed;
+    private BooleanProperty selected = new SimpleBooleanProperty(false);
+
 
     public Book(String title, String author, String year, String publisher) {
         this.author = author;

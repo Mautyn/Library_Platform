@@ -1,6 +1,9 @@
 package library_platform.Client.view.book_categories;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -8,34 +11,54 @@ import library_platform.Client.SceneController;
 import javafx.fxml.FXML;
 import library_platform.Client.view.CategoriesController;
 import library_platform.Shared.Book;
+
 import java.io.IOException;
 
-public class adventureController {
-    @FXML
-    private TableView<Book> tableView;
+    public class adventureController {
+        @FXML
+        private TableView<Book> tableView;
 
-    @FXML
-    private TableColumn<Book, String> titleColumn;
+        @FXML
+        private TableColumn<Book, String> titleColumn;
 
-    @FXML
-    private TableColumn<Book, String> authorColumn;
+        @FXML
+        private TableColumn<Book, String> authorColumn;
 
-    @FXML
-    private TableColumn<Book, String> yearColumn;
+        @FXML
+        private TableColumn<Book, String> publisherColumn;
 
-    @FXML
-    private TableColumn<Book, String> publisherColumn;
+        @FXML
+        private TableColumn<Book, String> yearColumn;
 
+        @FXML
+        private TableColumn<Book, CheckBox> selectColumn;
+
+        @FXML
+        private JFXButton addWishlistButton;
 
     public void initialize() {
-        initialize(titleColumn, authorColumn, yearColumn, publisherColumn, tableView, "Przygodowe");
+        initialize(titleColumn, authorColumn, publisherColumn, yearColumn, selectColumn, tableView, "Przygodowe");
     }
 
-    static void initialize(TableColumn<Book, String> titleColumn, TableColumn<Book, String> authorColumn, TableColumn<Book, String> yearColumn, TableColumn<Book, String> publisherColumn, TableView<Book> tableView, String sortBy) {
+    static void initialize(TableColumn<Book, String> titleColumn, TableColumn<Book, String> authorColumn,
+                           TableColumn<Book, String> publisherColumn, TableColumn<Book, String> yearColumn, TableColumn<Book, CheckBox> selectColumn, TableView<Book> tableView, String sortBy) {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
-        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
         publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+
+
+        selectColumn.setCellValueFactory(param -> {
+            CheckBox checkBox = new CheckBox();
+            checkBox.setOnAction(event -> {
+                if (checkBox.isSelected()) {
+                    System.out.println("Selected: " + param.getValue().getTitle());
+                } else {
+                    System.out.println("Deselected: " + param.getValue().getTitle());
+                }
+            });
+            return new SimpleObjectProperty<>(checkBox);
+        });
 
         CategoriesController controller = new CategoriesController();
 

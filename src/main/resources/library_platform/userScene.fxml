@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.UserController">
     <children>
@@ -15,7 +16,7 @@
             <children>
                 <AnchorPane id="side_anhorPane" prefHeight="542.0" prefWidth="201.0" style="-fx-background-color: #0e636e;" styleClass="side_anhorPane" stylesheets="@obrazy/style.css">
                     <children>
-                        <JFXButton id="main_page_button" onAction="#onMainPageClick" layoutX="25.0" layoutY="135.0" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Main page" textFill="WHITE">
+                        <JFXButton id="main_page_button" layoutX="25.0" layoutY="135.0" onAction="#onMainPageClick" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Main page" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
@@ -25,22 +26,22 @@
                                 <Image url="@obrazy/196039.png" />
                             </image>
                         </ImageView>
-                        <JFXButton id="catogories_button" onAction="#onCategoriesClick" layoutX="32.0" layoutY="319.0" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
+                        <JFXButton id="catogories_button" layoutX="32.0" layoutY="319.0" onAction="#onCategoriesClick" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton id="rActivity_button" onAction="#onRecentClick" layoutX="32.0" layoutY="217.0" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
+                        <JFXButton id="rActivity_button" layoutX="32.0" layoutY="217.0" onAction="#onRecentClick" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton id="search_button" onAction="#onSearchClick" layoutX="32.0" layoutY="271.0" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
+                        <JFXButton id="search_button" layoutX="32.0" layoutY="271.0" onAction="#onSearchClick" prefHeight="31.0" prefWidth="132.0" text="Search" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton id="facilities_button" onAction="#onFacilitiesClick" layoutX="32.0" layoutY="371.0" prefHeight="31.0" prefWidth="132.0" text="Our facilities" textFill="#fffdfd">
+                        <JFXButton id="facilities_button" layoutX="32.0" layoutY="371.0" onAction="#onFacilitiesClick" prefHeight="31.0" prefWidth="132.0" text="Our facilities" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
@@ -51,33 +52,44 @@
         </VBox>
         <Pane prefHeight="542.0" prefWidth="769.0">
             <children>
-                <Pane layoutX="62.0" layoutY="94.0" prefHeight="327.0" prefWidth="615.0" style="-fx-background-color: #FFFFFF;">
-                    <children>
-                        <Pane layoutX="86.0" prefHeight="327.0" prefWidth="443.0" style="-fx-background-color: #0e636e;">
+                  <Pane layoutX="151.0" layoutY="108.0" prefHeight="327.0" prefWidth="443.0" style="-fx-background-color: #0e636e;">
+               <children>
+                  <JFXButton id="logOutButton" layoutX="349.0" layoutY="274.0" onAction="#onLogOutClick" style="-fx-background-color: #FFFFFF;" text="Log out">
+                     <font>
+                        <Font name="System Italic" size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton id="borrowedBooksButton" layoutX="70.0" layoutY="198.0" onAction="#onborrowedBooksClick" style="-fx-background-color: #FFFFFF;" text="borrowed books">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton id="returnedBooksButton" layoutX="70.0" layoutY="243.0" onAction="#onreturnedBooksClick" prefHeight="31.0" prefWidth="136.0" style="-fx-background-color: #FFFFFF;" text="returned books">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <ImageView fitHeight="97.0" fitWidth="103.0" layoutX="301.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@obrazy/552721.png" />
+                     </image>
+                  </ImageView>
+                  <Pane layoutX="40.0" layoutY="57.0" prefHeight="39.0" prefWidth="222.0" style="-fx-background-color: #3a8c79;">
                      <children>
-                        <JFXButton id="logOutButton" onAction="#onLogOutClick" layoutX="349.0" layoutY="274.0" style="-fx-background-color: #FFFFFF;" text="Log out">
+                        <Text fx:id="showLoginText" fill="WHITE" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="196.79999999999995">
                            <font>
-                              <Font name="System Italic" size="15.0" />
+                              <Font name="System Bold Italic" size="15.0" />
                            </font>
-                        </JFXButton>
-                        <JFXButton id="borrowedBooksButton" onAction="#onborrowedBooksClick" layoutX="154.0" layoutY="178.0" style="-fx-background-color: #FFFFFF;" text="borrowed books">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton id="returnedBooksButton" onAction="#onreturnedBooksClick" layoutX="154.0" layoutY="223.0" prefHeight="31.0" prefWidth="136.0" style="-fx-background-color: #FFFFFF;" text="returned books">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </JFXButton>
-                        <ImageView fitHeight="97.0" fitWidth="103.0" layoutX="301.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@obrazy/552721.png" />
-                           </image>
-                        </ImageView>
+                        </Text>
                      </children>
-                        </Pane>
-                    </children></Pane>
+                  </Pane>
+                  <JFXButton id="borrowedBooksButton" layoutX="70.0" layoutY="153.0" onAction="#onborrowedBooksClick" prefHeight="31.0" prefWidth="137.0" style="-fx-background-color: #FFFFFF;" text="whislist">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+                  </Pane>
             </children>
         </Pane>
     </children>

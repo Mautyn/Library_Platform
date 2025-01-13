@@ -1,9 +1,9 @@
 package library_platform.Client.view;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
 
@@ -19,6 +19,14 @@ public class UserController {
     @FXML
     private JFXButton borrowedBooksButton;
 
+    @FXML
+    private Text showLoginText;
+
+    public void initialize() {
+        if (LoginController.isLoggedIn) {
+            showLoginText.setText(LoginController.loggedInUserEmail);
+        }
+    }
 
     public void onLogOutClick(ActionEvent event) {
         try {

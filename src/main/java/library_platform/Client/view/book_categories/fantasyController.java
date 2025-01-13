@@ -1,7 +1,9 @@
 package library_platform.Client.view.book_categories;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import library_platform.Client.SceneController;
@@ -21,14 +23,20 @@ public class fantasyController {
     private TableColumn<Book, String> authorColumn;
 
     @FXML
+    private TableColumn<Book, String> publisherColumn;
+
+    @FXML
+    private TableColumn<Book, CheckBox> selectColumn;
+
+    @FXML
     private TableColumn<Book, String> yearColumn;
 
     @FXML
-    private TableColumn<Book, String> publisherColumn;
+    private JFXButton addWishlistButton;
 
 
     public void initialize() {
-        adventureController.initialize(titleColumn, authorColumn, yearColumn, publisherColumn, tableView, "Fantastyka");
+        adventureController.initialize(titleColumn, authorColumn, publisherColumn, yearColumn,selectColumn, tableView, "Fantastyka");
     }
 
     public void onSearchClick(ActionEvent actionEvent) {

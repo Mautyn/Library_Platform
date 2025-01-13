@@ -54,20 +54,26 @@
             <children>
                 <Pane layoutY="17.0" prefHeight="97.0" prefWidth="728.0">
                     <children>
-                        <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADVENTURE" wrappingWidth="496.0">
+                        <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HORROR" wrappingWidth="496.0">
                             <font>
                                 <Font size="52.0" />
                             </font>
                         </Text>
+                        <JFXButton layoutX="589.0" layoutY="25.0" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: #3a8c79;" styleClass="addWishlistButton" text="Add to wishlsit" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </JFXButton>
                     </children></Pane>
-                <Pane id="categories_pane" layoutX="44.0" layoutY="114.0" prefHeight="398.0" prefWidth="589.0" style="-fx-background-color: #FFFFFF;" styleClass="categories_pane" stylesheets="@../obrazy/style.css">
+                <Pane id="categories_pane" layoutX="29.0" layoutY="107.0" prefHeight="398.0" prefWidth="474.0" style="-fx-background-color: #FFFFFF;" styleClass="categories_pane" stylesheets="@../obrazy/style.css">
                     <children>
-                        <TableView id="tableView" fx:id="tableView" layoutX="-5.0" layoutY="-4.0" prefHeight="404.0" prefWidth="597.0">
+                        <TableView id="tableView" fx:id="tableView" layoutY="-3.0" prefHeight="404.0" prefWidth="686.0">
                             <columns>
                                 <TableColumn id="titleColumn" fx:id="titleColumn" prefWidth="195.1999626159668" text="book title" />
                                 <TableColumn id="authorColumn" fx:id="authorColumn" prefWidth="125.60005187988281" text="author" />
-                                <TableColumn id="yearColumn" fx:id="yearColumn" prefWidth="111.20001220703125" text="year of publication" />
                                 <TableColumn id="publisherColumn" fx:id="publisherColumn" prefWidth="169.5999755859375" text="publisher" />
+                                <TableColumn fx:id="yearColumn" prefWidth="116.79998779296875" text="date of publication" />
+                                <TableColumn fx:id="selectColumn" prefWidth="77.60009765625" text="Select" />
                             </columns>
                         </TableView>
                     </children>

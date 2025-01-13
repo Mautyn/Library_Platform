@@ -10,13 +10,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.book_categories.fantasyController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="940.0" style="-fx-background-color: #f1f1e6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library_platform.Client.view.borrowedController">
     <children>
         <VBox prefHeight="542.0" prefWidth="223.0">
             <children>
-                <AnchorPane id="side_anhorPane" prefHeight="542.0" prefWidth="201.0" style="-fx-background-color: #0e636e;" styleClass="side_anhorPane" stylesheets="@../obrazy/style.css">
+                <AnchorPane id="side_anhorPane" prefHeight="542.0" prefWidth="201.0" style="-fx-background-color: #0e636e;" styleClass="side_anhorPane" stylesheets="@obrazy/style.css">
                     <children>
                         <JFXButton id="main_page_button" layoutX="25.0" layoutY="135.0" onAction="#onMainPageClick" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Main page" textFill="WHITE">
                             <font>
@@ -25,8 +24,9 @@
                         </JFXButton>
                         <ImageView fitHeight="97.0" fitWidth="112.0" layoutX="50.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../obrazy/196039.png" />
-                            </image></ImageView>
+                                <Image url="@obrazy/196039.png" />
+                            </image>
+                        </ImageView>
                         <JFXButton id="catogories_button" layoutX="32.0" layoutY="319.0" onAction="#onCategoriesClick" prefHeight="31.0" prefWidth="132.0" text="Categories" textFill="#fffdfd">
                             <font>
                                 <Font name="System Bold" size="14.0" />
@@ -47,37 +47,29 @@
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </JFXButton>
-                    </children></AnchorPane>
+                    </children>
+                </AnchorPane>
             </children>
         </VBox>
         <Pane prefHeight="542.0" prefWidth="769.0">
             <children>
-                <Pane layoutY="17.0" prefHeight="97.0" prefWidth="728.0">
-                    <children>
-                        <Text layoutX="38.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FANTASY" wrappingWidth="496.0">
-                            <font>
-                                <Font size="52.0" />
-                            </font>
-                        </Text>
-                        <JFXButton layoutX="589.0" layoutY="25.0" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: #3a8c79;" styleClass="addWishlistButton" text="Add to wishlsit" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font>
-                        </JFXButton>
-                    </children></Pane>
-                <Pane id="categories_pane" layoutX="29.0" layoutY="107.0" prefHeight="398.0" prefWidth="474.0" style="-fx-background-color: #FFFFFF;" styleClass="categories_pane" stylesheets="@../obrazy/style.css">
-                    <children>
-                        <TableView id="tableView" fx:id="tableView" layoutY="-3.0" prefHeight="404.0" prefWidth="686.0">
-                            <columns>
-                                <TableColumn id="titleColumn" fx:id="titleColumn" prefWidth="195.1999626159668" text="book title" />
-                                <TableColumn id="authorColumn" fx:id="authorColumn" prefWidth="125.60005187988281" text="author" />
-                                <TableColumn id="publisherColumn" fx:id="publisherColumn" prefWidth="169.5999755859375" text="publisher" />
-                                <TableColumn fx:id="yearColumn" prefWidth="116.79998779296875" text="date of publication" />
-                                <TableColumn fx:id="selectColumn" prefWidth="77.60009765625" text="Select" />
-                            </columns>
-                        </TableView>
-                    </children>
+                <Pane layoutX="151.0" layoutY="108.0" prefHeight="327.0" prefWidth="443.0" style="-fx-background-color: #0e636e;">
+               <children>
+                  <TableView id="tableView" layoutX="-1.0" layoutY="-1.0" prefHeight="327.0" prefWidth="443.0">
+                    <columns>
+                        <TableColumn fx:id="bookIdColumn" prefWidth="75.0" text="book id" />
+                      <TableColumn fx:id="titleColumn" prefWidth="120.80006408691406" text="title" />
+                      <TableColumn fx:id="authorColumn" prefWidth="117.5999755859375" text="author" />
+                        <TableColumn fx:id="rentalDateColumn" prefWidth="119.2000732421875" text="rental date" />
+                    </columns>
+                  </TableView>
+               </children>
                 </Pane>
+            <JFXButton id="backButton" layoutX="43.0" layoutY="46.0" onAction="#onBackClick" prefHeight="40.0" prefWidth="97.0" style="-fx-background-color: #0e636e;" text="Back" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
             </children>
         </Pane>
     </children>

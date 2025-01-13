@@ -38,7 +38,7 @@ public class LibraryServer {
     private static class ClientHandler extends Thread {
         private Socket clientSocket;
         private boolean loggedIn;
-        ObservableList<Book> books;
+        ArrayList<Book> books;
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
@@ -56,6 +56,7 @@ public class LibraryServer {
                 LoginCredentials credentials;
                 Request request;
                 while ((request = (Request) in.readObject()) != null) {
+                    System.out.println(request.getContent());
                     switch (request.getContent()) {
                         case "LOG_IN":
                             credentials = (LoginCredentials) in.readObject();
@@ -66,9 +67,11 @@ public class LibraryServer {
                             loggedIn = registerUser(credentials);
                             break;
                         case "GET_BOOKS":
+                            String searchMode = ((Request) in.readObject()).getContent();
                             String searchQuery = ((Request) in.readObject()).getContent();
-                            books = FXCollections.observableArrayList(getBooks(searchQuery));
+                            books = getBooks(searchMode, searchQuery);
                             out.writeObject(books);
+
                             break;
                         case "BORROW_BOOK":
                             if(loggedIn) {
@@ -175,33 +178,65 @@ public class LibraryServer {
             return loggedIn;
         }
 
-        private List<Book> getBooks(String searchQuery) {
-            String query;
-            if(searchQuery.isEmpty()) {
-                query = """
-                SELECT * FROM passwords;
-                """;
-            } else {
-                query = """
-                        SELECT * FROM passwords WHERE Tytul LIKE '%'?'%' OR Autor LIKE '%'?'%' OR Gatunek LIKE '%'?'%';
-                        """;
-            }
-            List<Book> bookList = new ArrayList<>();
+        private ArrayList<Book> getBooks(String searchMode, String searchQuery) {
             try {
+                String query = "";
                 Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                ResultSet rs = preparedStatement.executeQuery();
-                while(rs.next()) {
-                    Book book = new Book(rs.getString("Tytul"));
-                    book.setId(rs.getInt("ID_ksiazki"));
-                    book.setCategory(rs.getString("Gatunek"));
-                    book.setAuthor(rs.getString("Autor"));
-                    bookList.add(book);
-                }
+                if(searchMode.equals("CATEGORIES")) {
+                    query = "SELECT * FROM ksiazka WHERE Gatunek LIKE '" + searchQuery + "'";
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    ArrayList<Book> bookList = new ArrayList<>();
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while(rs.next()) {
+                        Book book = new Book(rs.getString("Tytul"));
+                        book.setId(rs.getInt("ID_ksiazki"));
+                        book.setCategory(rs.getString("Gatunek"));
+                        book.setAuthor(rs.getString("Autor"));
+                        book.setPublisher(rs.getString("Wydawnictwo"));
+                        book.setYear(rs.getString("Rok_wydania"));
+                        bookList.add(book);
+                    }
+                    return bookList;
+                } else if (searchMode.equals("FULL")) {
+                    if(searchQuery.isEmpty()) {
+                        query = "SELECT * FROM ksiazka";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        ArrayList<Book> bookList = new ArrayList<>();
 
+                        ResultSet rs = preparedStatement.executeQuery();
+                        while(rs.next()) {
+                            Book book = new Book(rs.getString("Tytul"));
+                            book.setId(rs.getInt("ID_ksiazki"));
+                            book.setCategory(rs.getString("Gatunek"));
+                            book.setAuthor(rs.getString("Autor"));
+                            book.setPublisher(rs.getString("Wydawnictwo"));
+                            book.setYear(rs.getString("Rok_wydania"));
+                            bookList.add(book);
+                        }
+                        return bookList;
+
+                    } else {
+                        query = "SELECT * FROM ksiazka WHERE Tytul LIKE '%" +searchQuery + "%' OR Autor LIKE '%" +searchQuery + "%' OR Gatunek LIKE '%" +searchQuery + "%'";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        ArrayList<Book> bookList = new ArrayList<>();
+
+                        ResultSet rs = preparedStatement.executeQuery();
+                        while(rs.next()) {
+                            Book book = new Book(rs.getString("Tytul"));
+                            book.setId(rs.getInt("ID_ksiazki"));
+                            book.setCategory(rs.getString("Gatunek"));
+                            book.setAuthor(rs.getString("Autor"));
+                            book.setPublisher(rs.getString("Wydawnictwo"));
+                            book.setYear(rs.getString("Rok_wydania"));
+                            bookList.add(book);
+                        }
+                        return bookList;
+                    }
+                }
             } catch (Exception exception) {
                 throw new RuntimeException(exception);
             }
+            ArrayList<Book> bookList = new ArrayList<>();
             return bookList;
         }
     }

@@ -71,6 +71,23 @@ public class Book implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
+    }
+
     @Override
     public String toString() {
         return title + (isBorrowed ? " (Borrowed)" : "");

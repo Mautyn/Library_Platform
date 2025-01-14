@@ -1,3 +1,4 @@
+/*
 package library_platform.Client.view.book_categories;
 
 import com.jfoenix.controls.JFXButton;
@@ -7,6 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import library_platform.Client.SceneController;
+import library_platform.Client.view.LoginController;
 import library_platform.Shared.Book;
 
 import java.io.IOException;
@@ -36,6 +38,20 @@ public class biographyController {
 
     public void initialize() {
         adventureController.initialize(titleColumn, authorColumn, publisherColumn, yearColumn, selectColumn, tableView, "Biografie i autobiografie");
+    }
+
+    public void onWishListClick(ActionEvent actionEvent) {
+        if (LoginController.isLoggedIn) {
+
+            //dodanie do wishlisty dla danego użytkownika
+
+        } else {
+            try {
+                SceneController.setScene(actionEvent, "/library_platform/loginScene.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void onSearchClick(ActionEvent actionEvent) {
@@ -73,3 +89,4 @@ public class biographyController {
         }
     }
 }
+*/

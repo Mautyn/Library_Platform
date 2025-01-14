@@ -6,10 +6,11 @@ import javafx.scene.control.Alert;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 /** klasa obsługująca połączenie z serwerem */
-public class ConnectionHandler {
+public class ConnectionHandler implements Serializable {
 
     /** instancja */
     private static ConnectionHandler connectionHandlerInstance;

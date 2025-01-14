@@ -1,21 +1,20 @@
-/*
-package library_platform.Client.view.book_categories;
+package library_platform.Client.view;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import library_platform.Client.SceneController;
-import library_platform.Client.view.CategoriesController;
-import library_platform.Client.view.LoginController;
 import library_platform.Shared.Book;
 
 import java.io.IOException;
 
-public class classicController {
+public class CategListController {
 
     @FXML
     private TableView<Book> tableView;
@@ -30,21 +29,48 @@ public class classicController {
     private TableColumn<Book, String> publisherColumn;
 
     @FXML
+    private TableColumn<Book, String> yearColumn;
+
+    @FXML
     private TableColumn<Book, CheckBox> selectColumn;
 
     @FXML
-    private TableColumn<Book, String> yearColumn;
+    private Text headerText;
 
     @FXML
     private JFXButton addWishlistButton;
 
-
-
     public void initialize() {
-        adventureController.initialize(titleColumn, authorColumn, publisherColumn, yearColumn,selectColumn, tableView, "Literatura obyczajowa");
+        initialize(titleColumn, authorColumn, publisherColumn, yearColumn, selectColumn, tableView, CategoriesController.category2);
+        headerText.setText(CategoriesController.category);
     }
 
-    public void onWishListClick(ActionEvent actionEvent) {
+    static void initialize(TableColumn<Book, String> titleColumn, TableColumn<Book, String> authorColumn,
+                           TableColumn<Book, String> publisherColumn, TableColumn<Book, String> yearColumn, TableColumn<Book, CheckBox> selectColumn, TableView<Book> tableView, String sortBy) {
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+        publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+
+
+        selectColumn.setCellValueFactory(param -> {
+            CheckBox checkBox = new CheckBox();
+            checkBox.setOnAction(event -> {
+                if (checkBox.isSelected()) {
+                    System.out.println("Selected: " + param.getValue().getTitle());
+                } else {
+                    System.out.println("Deselected: " + param.getValue().getTitle());
+                }
+            });
+            return new SimpleObjectProperty<>(checkBox);
+        });
+
+        CategoriesController controller = new CategoriesController();
+
+        controller.loadBooksFromDatabase(tableView, sortBy);
+    }
+
+    public void onWishListClick(ActionEvent actionEvent) throws IOException{
         if (LoginController.isLoggedIn) {
 
             //dodanie do wishlisty dla danego użytkownika
@@ -93,4 +119,3 @@ public class classicController {
         }
     }
 }
-*/

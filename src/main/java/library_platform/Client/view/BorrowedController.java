@@ -1,22 +1,16 @@
-/*
-package library_platform.Client.view.book_categories;
+package library_platform.Client.view;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import library_platform.Client.SceneController;
-import library_platform.Client.view.CategoriesController;
-import library_platform.Client.view.LoginController;
 import library_platform.Shared.Book;
 
 import java.io.IOException;
 
-public class classicController {
-
+public class BorrowedController {
     @FXML
     private TableView<Book> tableView;
 
@@ -27,40 +21,17 @@ public class classicController {
     private TableColumn<Book, String> authorColumn;
 
     @FXML
-    private TableColumn<Book, String> publisherColumn;
+    private TableColumn<Book, String> bookIdColumn;
 
     @FXML
-    private TableColumn<Book, CheckBox> selectColumn;
+    private TableColumn<Book, String> rentalDateColumn;
 
     @FXML
-    private TableColumn<Book, String> yearColumn;
+    private JFXButton backButton;
 
-    @FXML
-    private JFXButton addWishlistButton;
-
-
-
-    public void initialize() {
-        adventureController.initialize(titleColumn, authorColumn, publisherColumn, yearColumn,selectColumn, tableView, "Literatura obyczajowa");
-    }
-
-    public void onWishListClick(ActionEvent actionEvent) {
-        if (LoginController.isLoggedIn) {
-
-            //dodanie do wishlisty dla danego użytkownika
-
-        } else {
-            try {
-                SceneController.setScene(actionEvent, "/library_platform/loginScene.fxml");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public void onSearchClick(ActionEvent actionEvent) {
+    public void onBackClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/searchScene.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/userScene.fxml");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -75,6 +46,7 @@ public class classicController {
     }
 
     public void onRecentClick(ActionEvent actionEvent) {
+
     }
 
     public void onCategoriesClick(ActionEvent actionEvent) {
@@ -84,7 +56,6 @@ public class classicController {
             throw new RuntimeException(e);
         }
     }
-
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
             SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
@@ -92,5 +63,12 @@ public class classicController {
             throw new RuntimeException(e);
         }
     }
+
+    public void onSearchClick(ActionEvent actionEvent) {
+        try {
+            SceneController.setScene(actionEvent, "/library_platform/searchScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
-*/

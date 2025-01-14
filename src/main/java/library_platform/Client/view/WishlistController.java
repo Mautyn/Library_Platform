@@ -1,6 +1,6 @@
 package library_platform.Client.view;
 
-import com.jfoenix.controls.JFXButton;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -11,7 +11,8 @@ import library_platform.Shared.Book;
 
 import java.io.IOException;
 
-public class borrowedController {
+public class WishlistController {
+
     @FXML
     private TableView<Book> tableView;
 
@@ -22,17 +23,31 @@ public class borrowedController {
     private TableColumn<Book, String> authorColumn;
 
     @FXML
+    private TableColumn<Book, String> publisherColumn;
+
+    @FXML
     private TableColumn<Book, String> bookIdColumn;
 
     @FXML
-    private TableColumn<Book, String> rentalDateColumn;
+    private TableColumn<Book, CheckBox> selectColumn;
 
-    @FXML
-    private JFXButton backButton;
+    public void initialize() {
+        selectColumn.setCellValueFactory(param -> {
+            CheckBox checkBox = new CheckBox();
+            checkBox.setOnAction(event -> {
+                if (checkBox.isSelected()) {
+                    System.out.println("Selected: " + param.getValue().getTitle());
+                } else {
+                    System.out.println("Deselected: " + param.getValue().getTitle());
+                }
+            });
+            return new SimpleObjectProperty<>(checkBox);
+        });
+    }
 
     public void onBackClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/userScene.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

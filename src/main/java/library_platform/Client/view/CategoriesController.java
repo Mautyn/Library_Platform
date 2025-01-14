@@ -53,6 +53,9 @@ public class CategoriesController {
     @FXML
     private JFXButton thrillerButton;
 
+    public static String category = "";
+    public static String category2 = "";
+
     public void onSearchClick(ActionEvent actionEvent) {
         try {
             SceneController.setScene(actionEvent, "/library_platform/searchScene.fxml");
@@ -90,7 +93,9 @@ public class CategoriesController {
 
     public void onAdventureClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/adventureScene.fxml");
+            category = "Adventure";
+            category2 = "Przygodowe";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -98,7 +103,9 @@ public class CategoriesController {
 
     public void onClassicClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/classicScene.fxml");
+            category = "Classic";
+            category2 = "Literatura obyczajowa";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -106,7 +113,10 @@ public class CategoriesController {
 
     public void onCrimeClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/crimeScene.fxml");
+            category = "Crime";
+            category2 = "Kryminał";
+
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -114,7 +124,9 @@ public class CategoriesController {
 
     public void onFantasyClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/fantasyScene.fxml");
+            category = "Fantasy";
+            category2 = "Fantastyka";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -122,7 +134,9 @@ public class CategoriesController {
 
     public void onHistoryClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/historyScene.fxml");
+            category = "History";
+            category2 = "Historyczne";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -130,7 +144,9 @@ public class CategoriesController {
 
     public void onBiographyClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/biographyScene.fxml");
+            category = "Biography";
+            category2 = "Biografie i autobiografie";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -138,7 +154,9 @@ public class CategoriesController {
 
     public void onHorrorClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/horrorScene.fxml");
+            category = "Horror";
+            category2 = "Horror";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -146,7 +164,9 @@ public class CategoriesController {
 
     public void onRomanticClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/romanticScene.fxml");
+            category = "Romantic";
+            category2 = "Romans";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -154,7 +174,9 @@ public class CategoriesController {
 
     public void onScienceClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/scienceFictionScene.fxml");
+            category = "Science Fiction";
+            category2 = "Science Fiction";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -162,7 +184,9 @@ public class CategoriesController {
 
     public void onThrillerClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/book_categories/thrillerScene.fxml");
+            category = "Thriller";
+            category2 = "Thriller";
+            SceneController.setScene(actionEvent, "/library_platform/categListScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

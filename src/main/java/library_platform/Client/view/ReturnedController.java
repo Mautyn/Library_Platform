@@ -10,7 +10,7 @@ import library_platform.Shared.Book;
 
 import java.io.IOException;
 
-public class returnedController {
+public class ReturnedController {
 
     @FXML
     private TableView<Book> tableView;
@@ -29,6 +29,10 @@ public class returnedController {
 
     @FXML
     private JFXButton backButton;
+
+    public void initialize() {
+
+    }
 
     public void onBackClick(ActionEvent actionEvent) {
         try {

@@ -46,8 +46,9 @@ public class ConnectionHandler {
     public void sendObjectToServer(Object object) {
         try {
             objectOutput.writeObject(object);
-            System.out.println("To server: " + object.getClass());
 
+            // Added for debugging - todo delete later
+            System.out.println("To server: " + object.getClass());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,6 +61,8 @@ public class ConnectionHandler {
         Object object;
         try {
             object = objectInput.readObject();
+
+            // Added for debugging - todo delete later
             System.out.println("From server: " + object.getClass());
             return object;
         } catch (IOException e) {

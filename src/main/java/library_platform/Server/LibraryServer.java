@@ -7,10 +7,7 @@ import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
 import library_platform.Client.view.LoginController;
 import library_platform.Client.view.MainPageController;
-import library_platform.Shared.Book;
-import library_platform.Shared.DatabaseConnection;
-import library_platform.Shared.LoginCredentials;
-import library_platform.Shared.Request;
+import library_platform.Shared.*;
 
 import java.io.*;
 import java.net.*;
@@ -21,7 +18,6 @@ import java.util.*;
 
 
 public class LibraryServer {
-    //private static List<Book> books = Collections.synchronizedList(new ArrayList<>());
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(54321)) {
@@ -39,12 +35,14 @@ public class LibraryServer {
     private static class ClientHandler extends Thread {
         private Socket clientSocket;
         private boolean loggedIn;
+        private boolean loggedAsAdmin;
         ArrayList<Book> queryBooks;
         ArrayList<Book> bookCopies;
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
             this.loggedIn = false;
+            this.loggedAsAdmin = false;
         }
 
         private ObjectInputStream in;
@@ -55,7 +53,7 @@ public class LibraryServer {
             try {
                 in = new ObjectInputStream(clientSocket.getInputStream());
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
-                LoginCredentials credentials;
+                LoginCredentials credentials = null;
                 Request request;
                 while ((request = (Request) in.readObject()) != null) {
                     System.out.println(request.getContent());
@@ -74,15 +72,72 @@ public class LibraryServer {
                             queryBooks = getBooks(searchMode, searchQuery);
                             out.writeObject(queryBooks);
                             break;
-                        case "BORROW_BOOK":
+                        // ONLY USER
+                        case "RESERVE_BOOK":
                             if(loggedIn) {
 //                                String title = (String) in.readObject();
 //                                boolean success = borrowBook(title);
 //                                out.writeObject(success);
                             }
                             break;
+                        // ONLY USER
+                        case "UNDO_RESERVE_BOOK":
+                            if(loggedIn) {
+//                                String title = (String) in.readObject();
+//                                boolean success = borrowBook(title);
+//                                out.writeObject(success);
+                            }
+                            break;
+                        // ONLY ADMIN
+                        case "SET_BOOK_BORROWED":
+                            if(loggedIn && loggedAsAdmin) {
+//                                String title = (String) in.readObject();
+//                                boolean success = borrowBook(title);
+//                                out.writeObject(success);
+                            }
+                            break;
+                        // ONLY ADMIN
+                        case "SET_BOOK_RETURNED":
+                            if(loggedIn && loggedAsAdmin) {
+
+                            }
+                            break;
+                        case "DELETE_USER":
+                            if(loggedIn) {
+                                String userEmail = credentials.getLogin();
+                                loggedIn = !deleteUser(userEmail, true);
+                            } else if(loggedIn && loggedAsAdmin) {
+                                String userEmail = ((Request) in.readObject()).getContent();
+                                if(userEmail.equals(credentials.getLogin())) {
+                                    loggedIn = !deleteUser(userEmail, true);
+                                } else {
+                                    loggedIn = !deleteUser(userEmail, false);
+                                }
+                            }
+                            break;
+                        // ONLY ADMIN
+                        case "SET_ADMIN_PRIVILEGE":
+                            if(loggedIn && loggedAsAdmin) {
+
+                            }
+                            break;
+                        // ONLY ADMIN
+                        case "GET_USERS":
+                            if(loggedIn && loggedAsAdmin) {
+                                String userSearchQuery = ((Request) in.readObject()).getContent();
+                                ArrayList<User> userList = getUsers(userSearchQuery);
+                                out.writeObject(userList);
+                            }
+                            break;
+                        case "LOG_OUT":
+                            if(loggedIn) {
+                                logOut();
+                                credentials = null;
+                                out.writeObject(new Request("SUCCESS"));
+                            }
+                            break;
                         default:
-                            out.writeObject(new Request("UNKNOWN_REQUEST"));
+                            System.out.println("UNKNOWN REQUEST: " + request.getContent());
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
@@ -114,17 +169,58 @@ public class LibraryServer {
 //                }
 //            }
 //        }
+        private void logOut() {
+            loggedAsAdmin = false;
+            loggedIn = false;
+        }
+
+        private boolean deleteUser(String userEmail, boolean me) {
+            Request ans;
+            boolean success;
+            String query = "DELETE FROM uzytkownik WHERE E_mail = '" + userEmail + "';";
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                int rowsAffected;
+                synchronized (this) {
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    rowsAffected = preparedStatement.executeUpdate();
+                }
+                if (rowsAffected > 0) {
+                    ans = new Request("SUCCESS");
+                    success = true;
+                } else {
+                    ans = new Request("ERROR");
+                    success = false;
+                }
+            } catch (Exception e) {
+                ans = new Request("ERROR");
+                success = false;
+            }
+            try {
+                out.writeObject(ans);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return success;
+        }
 
         private boolean checkLogin(LoginCredentials credentials) {
-            String query = "SELECT * FROM uzytkownik WHERE E_mail = ? AND Haslo = ?";
+            String query = "SELECT * FROM uzytkownik WHERE E_mail = ? AND Haslo = ? AND Status_konta LIKE 'aktywne'";
             Request ans;
             boolean loggedIn;
-            try (Connection connection = DatabaseConnection.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, credentials.getLogin());
-                preparedStatement.setString(2, credentials.getHaslo());
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if(resultSet.next()) {
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                ResultSet resultSet;
+                synchronized (this) {
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    preparedStatement.setString(1, credentials.getLogin());
+                    preparedStatement.setString(2, credentials.getHaslo());
+                    resultSet = preparedStatement.executeQuery();
+                }
+                if (resultSet.next()) {
+                    if(resultSet.getString("Typ_uzytkownika").equals("pracownik")) {
+                        loggedAsAdmin = true;
+                    } else {
+                        loggedAsAdmin = false;
+                    }
                     System.out.println("LOGIN SUCCESS");
                     ans = new Request("SUCCESS");
                     loggedIn = true;
@@ -138,6 +234,7 @@ public class LibraryServer {
                 ans = new Request("ERROR");
                 loggedIn = false;
             }
+
             try {
                 out.writeObject(ans);
             } catch (Exception e) {
@@ -150,27 +247,32 @@ public class LibraryServer {
             String query = "SELECT * FROM uzytkownik WHERE E_mail = ?";
             Request ans;
             boolean loggedIn;
-            try (Connection connection = DatabaseConnection.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, credentials.getLogin());
-                ResultSet resultSet = preparedStatement.executeQuery();
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                ResultSet resultSet;
+                synchronized (this) {
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    preparedStatement.setString(1, credentials.getLogin());
+                    resultSet = preparedStatement.executeQuery();
+                }
 
                 if (resultSet.next()) {
                     ans = new Request("LOGIN_UNAVAILABLE");
                     loggedIn = false;
+                    credentials = null;
                 } else {
                     String insertQuery = "INSERT INTO uzytkownik (Imie, Nazwisko, E_mail, Haslo, Typ_uzytkownika, Data_rejestracji, Status_konta) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-                    PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
-                    insertStatement.setString(1, credentials.getFirstName());
-                    insertStatement.setString(2, credentials.getLastName());
-                    insertStatement.setString(3, credentials.getLogin());
-                    insertStatement.setString(4, credentials.getHaslo());
-                    insertStatement.setString(5, "petent");
-                    insertStatement.setDate(6, Date.valueOf(LocalDate.now()));
-                    insertStatement.setString(7, "aktywne");
-
-                    int rowsAffected = insertStatement.executeUpdate();
+                    int rowsAffected = 0;
+                    synchronized (this) {
+                        PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+                        insertStatement.setString(1, credentials.getFirstName());
+                        insertStatement.setString(2, credentials.getLastName());
+                        insertStatement.setString(3, credentials.getLogin());
+                        insertStatement.setString(4, credentials.getHaslo());
+                        insertStatement.setString(5, "petent");
+                        insertStatement.setDate(6, Date.valueOf(LocalDate.now()));
+                        insertStatement.setString(7, "aktywne");
+                        rowsAffected = insertStatement.executeUpdate();
+                    }
 
                     if (rowsAffected > 0) {
                         ans = new Request("SUCCESS");
@@ -184,6 +286,7 @@ public class LibraryServer {
                 ans = new Request("ERROR");
                 loggedIn = false;
             }
+
             try {
                 out.writeObject(ans);
                 return loggedIn;
@@ -199,9 +302,12 @@ public class LibraryServer {
                 Connection connection = DatabaseConnection.getConnection();
                 if(searchMode.equals("CATEGORIES")) {
                     query = "SELECT * FROM ksiazka WHERE Gatunek LIKE '" + searchQuery + "'";
-                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    ResultSet rs;
+                    synchronized (this) {
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        rs = preparedStatement.executeQuery();
+                    }
                     ArrayList<Book> bookList = new ArrayList<>();
-                    ResultSet rs = preparedStatement.executeQuery();
                     while(rs.next()) {
                         Book book = new Book(rs.getString("Tytul"));
                         book.setId(rs.getInt("ID_ksiazki"));
@@ -214,11 +320,15 @@ public class LibraryServer {
                     return bookList;
                 } else if (searchMode.equals("FULL")) {
                     if(searchQuery.isEmpty()) {
+
                         query = "SELECT * FROM ksiazka";
-                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        ResultSet rs;
+                        synchronized (this) {
+                            PreparedStatement preparedStatement = connection.prepareStatement(query);
+                            rs = preparedStatement.executeQuery();
+                        }
                         ArrayList<Book> bookList = new ArrayList<>();
 
-                        ResultSet rs = preparedStatement.executeQuery();
                         while(rs.next()) {
                             Book book = new Book(rs.getString("Tytul"));
                             book.setId(rs.getInt("ID_ksiazki"));
@@ -232,10 +342,14 @@ public class LibraryServer {
 
                     } else {
                         query = "SELECT * FROM ksiazka WHERE Tytul LIKE '%" +searchQuery + "%' OR Autor LIKE '%" +searchQuery + "%' OR Gatunek LIKE '%" +searchQuery + "%'";
-                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        ResultSet rs;
+                        synchronized (this) {
+                            PreparedStatement preparedStatement = connection.prepareStatement(query);
+                            rs = preparedStatement.executeQuery();
+
+                        }
                         ArrayList<Book> bookList = new ArrayList<>();
 
-                        ResultSet rs = preparedStatement.executeQuery();
                         while(rs.next()) {
                             Book book = new Book(rs.getString("Tytul"));
                             book.setId(rs.getInt("ID_ksiazki"));
@@ -253,6 +367,75 @@ public class LibraryServer {
             }
             ArrayList<Book> bookList = new ArrayList<>();
             return bookList;
+        }
+
+        private ArrayList<User> getUsers(String searchQuery) {
+            try {
+                String query = "";
+                Connection connection = DatabaseConnection.getConnection();
+                if(searchQuery.isEmpty()) {
+
+                    query = "SELECT * FROM uzytkownik";
+                    ResultSet rs;
+                    synchronized (this) {
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        rs = preparedStatement.executeQuery();
+                    }
+                    ArrayList<User> userList = new ArrayList<>();
+
+                    while(rs.next()) {
+                        User user = new User();
+                        user.setUserId(rs.getInt("ID_uzytkownika"));
+                        user.setFirstName(rs.getString("Imie"));
+                        user.setLastName(rs.getString("Nazwisko"));
+                        user.setEmail(rs.getString("E_mail"));
+                        if(rs.getString("Typ_uzytkownika").equals("pracownik")) {
+                            user.setWorker();
+                        } else {
+                            user.setCustomer();
+                        }
+                        if(rs.getString("Status_konta").equals("aktywne")) {
+                            user.setActive();
+                        } else {
+                            user.setInactive();
+                        }
+                        userList.add(user);
+                    }
+                    return userList;
+
+                } else {
+                    query = "SELECT * FROM uzytkownik WHERE Imie LIKE '%" +searchQuery + "%' OR Nazwisko LIKE '%" +searchQuery + "%' OR E_mail LIKE '%" +searchQuery + "%'";
+                    ResultSet rs;
+                    synchronized (this) {
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        rs = preparedStatement.executeQuery();
+
+                    }
+                    ArrayList<User> userList = new ArrayList<>();
+
+                    while(rs.next()) {
+                        User user = new User();
+                        user.setUserId(rs.getInt("ID_uzytkownika"));
+                        user.setFirstName(rs.getString("Imie"));
+                        user.setLastName(rs.getString("Nazwisko"));
+                        user.setEmail(rs.getString("E_mail"));
+                        if(rs.getString("Typ_uzytkownika").equals("pracownik")) {
+                            user.setWorker();
+                        } else {
+                            user.setCustomer();
+                        }
+                        if(rs.getString("Status_konta").equals("aktywne")) {
+                            user.setActive();
+                        } else {
+                            user.setInactive();
+                        }
+                        userList.add(user);
+                    }
+                    return userList;
+                }
+            } catch (Exception exception) {
+                throw new RuntimeException(exception);
+            }
         }
     }
 }

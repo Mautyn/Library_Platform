@@ -125,15 +125,16 @@ public class LibraryServer {
                 preparedStatement.setString(2, credentials.getHaslo());
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if(resultSet.next()) {
+                    System.out.println("LOGIN SUCCESS");
                     ans = new Request("SUCCESS");
-                    out.writeObject(ans);
                     loggedIn = true;
                 } else {
+                    System.out.println("LOGIN INVALID");
                     ans = new Request("INVALID");
-                    out.writeObject(ans);
                     loggedIn = false;
                 }
             } catch (Exception e) {
+                System.out.println("LOGIN ERROR");
                 ans = new Request("ERROR");
                 loggedIn = false;
             }

@@ -18,11 +18,6 @@ public class Converters {
             Book book = new Book(b.getTitle(), b.getAuthor(), b.getYear(), b.getPublisher());
             book.setId(b.getId());
             book.setCategory(b.getCategory());
-            if(b.isBorrowed()) {
-                book.borrow();
-            } else {
-                book.returnBook();
-            }
             booksArrayList.add(book);
         }
         return booksArrayList;
@@ -39,11 +34,6 @@ public class Converters {
             Book bk = new Book(book.getTitle(), book.getAuthor(), book.getYear(), book.getPublisher());
             bk.setCategory(book.getCategory());
             bk.setId(book.getId());
-            if(book.isBorrowed()) {
-                book.borrow();
-            } else {
-                book.returnBook();
-            }
             books.add(bk);
         }
         return FXCollections.observableArrayList(books);

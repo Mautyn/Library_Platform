@@ -14,6 +14,7 @@ import library_platform.Shared.Book;
 import library_platform.Shared.Converters;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class WishlistController {
 
@@ -32,6 +33,11 @@ public class WishlistController {
     @FXML
     private TableColumn<Book, CheckBox> selectColumn;
 
+    public static ArrayList<Book> wishlistBooks = new ArrayList<>();
+    public static ArrayList<Book> selectedBooks = new ArrayList<>();
+
+
+
     public void initialize() {
         publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -49,7 +55,7 @@ public class WishlistController {
             return new SimpleObjectProperty<>(checkBox);
         });
 
-        ObservableList<Book> booksObservableList = FXCollections.observableList(Converters.convertToObservable(SearchController.wishlistBooks));
+        ObservableList<Book> booksObservableList = FXCollections.observableList(Converters.convertToObservable(WishlistController.wishlistBooks));
         tableView.setItems(booksObservableList);
     }
 

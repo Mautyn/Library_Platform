@@ -65,7 +65,7 @@
                                 <Font size="52.0" />
                             </font>
                         </Text>
-                  <JFXButton id="addToWishlistButton" layoutX="494.0" layoutY="25.0" onAction="#onAddToWistlistClick" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Add to wishlist" textFill="WHITE">
+                  <JFXButton id="addToWishlistButton" layoutX="494.0" layoutY="25.0" onAction="#onAddToWishlistClick" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Add to wishlist" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

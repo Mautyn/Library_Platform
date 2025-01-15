@@ -50,8 +50,6 @@ public class SearchController implements Initializable {
     @FXML
     private TableView<Book> booksTable;
     private ObservableList<Book> books = FXCollections.observableArrayList();
-    public static ArrayList<Book> wishlistBooks = new ArrayList<>();
-
 
     public void initialize(URL url, ResourceBundle rb) {
         // ustawianie nagłówków dla kolumn
@@ -68,11 +66,11 @@ public class SearchController implements Initializable {
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
                     System.out.println("Selected: " + param.getValue().getTitle());
-                    UserController.selectedBooks.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    WishlistController.selectedBooks.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 } else {
                     System.out.println("Deselected: " + param.getValue().getTitle());
-                    UserController.selectedBooks.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    WishlistController.selectedBooks.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 }
             });
@@ -136,11 +134,10 @@ public class SearchController implements Initializable {
         }
     }
 
-    public void onAddToWistlistClick(ActionEvent actionEvent) {
+    public void onAddToWishlistClick(ActionEvent actionEvent) {
         if(LoginController.isLoggedIn){
-            wishlistBooks = UserController.selectedBooks;
+            WishlistController.wishlistBooks = WishlistController.selectedBooks;
         }
         AlertBuilder.showAlert("SUCCES!", "Books added to wishlist", Alert.AlertType.INFORMATION);
-
     }
 }

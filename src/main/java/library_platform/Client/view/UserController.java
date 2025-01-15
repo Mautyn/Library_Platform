@@ -25,7 +25,6 @@ public class UserController {
     private Text showLoginText;
 
     public static String buttonType;
-    public static ArrayList<Book> selectedBooks = new ArrayList<>();
 
 
     public void initialize() {

@@ -335,7 +335,7 @@ public class LibraryServer {
                     }
                     return bookList;
                 } else if (searchMode.equals("FULL")) {
-                    if (searchQuery.isEmpty()) {
+                    if(searchQuery.isEmpty()) {
 
                         query = "SELECT * FROM ksiazka";
                         ResultSet rs;
@@ -345,40 +345,6 @@ public class LibraryServer {
                         }
                         ArrayList<Book> bookList = new ArrayList<>();
 
-                        while (rs.next()) {
-                            Book book = new Book(rs.getString("Tytul"));
-                            book.setId(rs.getInt("ID_ksiazki"));
-                            book.setCategory(rs.getString("Gatunek"));
-                            book.setAuthor(rs.getString("Autor"));
-                            book.setPublisher(rs.getString("Wydawnictwo"));
-                            book.setYear(rs.getString("Rok_wydania"));
-                            bookList.add(book);
-                        }
-                        return bookList;
-                    }
-                }
-                    else if(searchMode.equals("RETURNED") || searchMode.equals("BORROWED")) {
-                        String date;
-                        String status;
-                        if(searchMode.equals("RETURNED")){
-                            date = "Data_zwrotu";
-                            status = "zakończone";
-                        }
-                        else{
-                            date = "Data_wypozyczenia";
-                            status = "aktywne";
-                        }
-                        query = "SELECT ksiazka.*, wypozyczenie.data_wypozyczenia, wypozyczenie.data_zwrotu FROM ksiazka " +
-                                "JOIN egzemplarz on ksiazka.ID_ksiazki = egzemplarz.ID_ksiazki " +
-                                "JOIN wypozyczenie on egzemplarz.id_egzemplarza = wypozyczenie.id_egzemplarza " +
-                                "LEFT JOIN uzytkownik ON uzytkownik.ID_uzytkownika = wypozyczenie.ID_uzytkownika " +
-                                "WHERE uzytkownik.E_mail LIKE '" + searchQuery + "' AND wypozyczenie.status like '" + status + "'"  ;
-                        ResultSet rs;
-                        synchronized (this) {
-                            PreparedStatement preparedStatement = connection.prepareStatement(query);
-                            rs = preparedStatement.executeQuery();
-                        }
-                        ArrayList<Book> bookList = new ArrayList<>();
                         while(rs.next()) {
                             Book book = new Book(rs.getString("Tytul"));
                             book.setId(rs.getInt("ID_ksiazki"));
@@ -386,7 +352,6 @@ public class LibraryServer {
                             book.setAuthor(rs.getString("Autor"));
                             book.setPublisher(rs.getString("Wydawnictwo"));
                             book.setYear(rs.getString("Rok_wydania"));
-                            book.setDate(rs.getString(date));
                             bookList.add(book);
                         }
                         return bookList;
@@ -411,6 +376,40 @@ public class LibraryServer {
                         }
                         return bookList;
                     }
+                } else if(searchMode.equals("RETURNED") || searchMode.equals("BORROWED")) {
+                    String date;
+                    String status;
+                    if(searchMode.equals("RETURNED")){
+                        date = "Data_zwrotu";
+                        status = "zakończone";
+                    }
+                    else{
+                        date = "Data_wypozyczenia";
+                        status = "aktywne";
+                    }
+                    query = "SELECT ksiazka.*, wypozyczenie.data_wypozyczenia, wypozyczenie.data_zwrotu FROM ksiazka " +
+                            "JOIN egzemplarz on ksiazka.ID_ksiazki = egzemplarz.ID_ksiazki " +
+                            "JOIN wypozyczenie on egzemplarz.id_egzemplarza = wypozyczenie.id_egzemplarza " +
+                            "LEFT JOIN uzytkownik ON uzytkownik.ID_uzytkownika = wypozyczenie.ID_uzytkownika " +
+                            "WHERE uzytkownik.E_mail LIKE '" + searchQuery + "' AND wypozyczenie.status like '" + status + "'"  ;
+                    ResultSet rs;
+                    synchronized (this) {
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        rs = preparedStatement.executeQuery();
+                    }
+                    ArrayList<Book> bookList = new ArrayList<>();
+                    while(rs.next()) {
+                        Book book = new Book(rs.getString("Tytul"));
+                        book.setId(rs.getInt("ID_ksiazki"));
+                        book.setCategory(rs.getString("Gatunek"));
+                        book.setAuthor(rs.getString("Autor"));
+                        book.setPublisher(rs.getString("Wydawnictwo"));
+                        book.setYear(rs.getString("Rok_wydania"));
+                        book.setDate(rs.getString(date));
+                        bookList.add(book);
+                    }
+                    return bookList;
+                }
             } catch (Exception exception) {
                 throw new RuntimeException(exception);
             }

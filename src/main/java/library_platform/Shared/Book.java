@@ -18,6 +18,8 @@ public class Book implements Serializable {
     private String publisher;
     private String category;
     private String date;
+    private String ISBN;
+    private int numOfCopies;
 
     // to było simpleBooleanProperty ale zmieniłem na boolean bo sie nie serializowało
     // jeśli checkbox sie wyjebie to mozliwe ze przez to
@@ -88,6 +90,30 @@ public class Book implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public int getNumOfCopies() {
+        return numOfCopies;
+    }
+
+    public void setNumOfCopies(int numOfCopies) {
+        this.numOfCopies = numOfCopies;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
 

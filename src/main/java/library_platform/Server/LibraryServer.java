@@ -80,17 +80,17 @@ public class LibraryServer {
                             }
                             break;
                         case "GET_BORROWED":
+                            searchMode = ((Request) in.readObject()).getContent();
+                            searchQuery = ((Request) in.readObject()).getContent();
                             if(loggedIn) {
-                                searchMode = ((Request) in.readObject()).getContent();
-                                searchQuery = ((Request) in.readObject()).getContent();
                                 queryBooks = getBooks(searchMode, searchQuery);
                                 out.writeObject(queryBooks);
                             }
                             break;
                         case "GET_RESERVED":
+                            searchMode = ((Request) in.readObject()).getContent();
+                            searchQuery = ((Request) in.readObject()).getContent();
                             if(loggedIn) {
-                                searchMode = ((Request) in.readObject()).getContent();
-                                searchQuery = ((Request) in.readObject()).getContent();
                                 queryBooks = getBooks(searchMode, searchQuery);
                                 out.writeObject(queryBooks);
                             }
@@ -126,22 +126,39 @@ public class LibraryServer {
                             }
                             break;
                         case "DELETE_USER":
-                            if(loggedIn) {
-                                String userEmail = credentials.getLogin();
+                            String userEmail = ((Request) in.readObject()).getContent();
+                            if(loggedIn && !loggedAsAdmin) {
                                 loggedIn = !deleteUser(userEmail, true);
                             } else if(loggedIn && loggedAsAdmin) {
-                                String userEmail = ((Request) in.readObject()).getContent();
                                 if(userEmail.equals(credentials.getLogin())) {
                                     loggedIn = !deleteUser(userEmail, true);
                                 } else {
                                     loggedIn = !deleteUser(userEmail, false);
                                 }
                             }
+                            if(!loggedIn) {
+                                credentials = null;
+                            }
                             break;
                         // ONLY ADMIN
                         case "SET_ADMIN_PRIVILEGE":
-                            if(loggedIn && loggedAsAdmin) {
-
+                            userEmail = ((Request) in.readObject()).getContent();
+                            if(loggedIn) {
+                                setAdminPrivilege(userEmail);
+                            }
+                            break;
+                        // ONLY ADMIN
+                        case "TAKE_ADMIN_PRIVILEGE":
+                            userEmail = ((Request) in.readObject()).getContent();
+                            if(loggedIn) {
+                                takeAdminPrivilege(userEmail);
+                            }
+                            break;
+                        // ONLY ADMIN
+                        case "ADD_BOOK":
+                            Book newBook = (Book) in.readObject();
+                            if(loggedIn) {
+                                addBook(newBook);
                             }
                             break;
                         // ONLY ADMIN
@@ -190,6 +207,49 @@ public class LibraryServer {
             loggedIn = false;
         }
 
+        private boolean addBook(Book newBook) {
+            Request ans;
+            boolean success;
+            String insertQuery = "INSERT INTO ksiazka (Tytul, Autor, ISBN, Rok_wydania, Getunek, Wydawnictwo, Liczba_egzemplarzy) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            try {
+                if(!loggedAsAdmin) {
+                    ans = new Request("ACCESS_DENIED");
+                    out.writeObject(ans);
+                    return false;
+                }
+                Connection connection = DatabaseConnection.getConnection();
+                int rowsAffected = 0;
+                synchronized (this) {
+                    PreparedStatement ps = connection.prepareStatement(insertQuery);
+                    ps.setString(1, newBook.getTitle());
+                    ps.setString(2, newBook.getAuthor());
+                    ps.setString(3, newBook.getISBN());
+                    ps.setString(4, newBook.getYear());
+                    ps.setString(5, newBook.getCategory());
+                    ps.setString(6, newBook.getPublisher());
+                    ps.setInt(7, newBook.getNumOfCopies());
+                    rowsAffected = ps.executeUpdate();
+                }
+                if (rowsAffected > 0) {
+                    ans = new Request("SUCCESS");
+                    success = true;
+                } else {
+                    ans = new Request("ERROR");
+                    success = false;
+                }
+            } catch (Exception e) {
+                ans = new Request("ERROR");
+                success = false;
+            }
+            try {
+                out.writeObject(ans);
+                return success;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return success;
+        }
+
         private boolean deleteUser(String userEmail, boolean me) {
             Request ans;
             boolean success;
@@ -208,6 +268,90 @@ public class LibraryServer {
                     success = false;
                 }
             } catch (Exception e) {
+                ans = new Request("ERROR");
+                success = false;
+            }
+            try {
+                out.writeObject(ans);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return success;
+        }
+
+        /**
+         * Sets admin privileges to user
+         * @param userEmail
+         * @return true if success false if error
+         */
+        private boolean setAdminPrivilege(String userEmail) {
+            Request ans;
+            boolean success;
+            try {
+                if(!loggedAsAdmin) {
+                    ans = new Request("ACCESS_DENIED");
+                    out.writeObject(ans);
+                    return false;
+                }
+                Connection connection = DatabaseConnection.getConnection();
+                String updateStatement = "UPDATE uzytkownik SET Typ_uzytkownika = 'pracownik' WHERE E-mail = '" + userEmail + "' AND Typ_uzytkownika = 'petent';";
+                int updatedRows;
+                synchronized (this) {
+                    PreparedStatement update = connection.prepareStatement(updateStatement);
+                    updatedRows = update.executeUpdate();
+                }
+                if(updatedRows > 0) {
+                    ans = new Request("SUCCESS");
+                    success = true;
+                } else {
+                    ans = new Request("ERROR");
+                    success = true;
+                }
+            } catch (Exception e) {
+                System.out.println("SET ADMIN PRIVILEGE ERROR");
+                e.printStackTrace();
+                ans = new Request("ERROR");
+                success = false;
+            }
+            try {
+                out.writeObject(ans);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return success;
+        }
+
+        /**
+         * Takes admin privileges from user
+         * @param userEmail
+         * @return true if success, false if error
+         */
+        private boolean takeAdminPrivilege(String userEmail) {
+            Request ans;
+            boolean success;
+            try {
+                if(!loggedAsAdmin) {
+                    ans = new Request("ACCESS_DENIED");
+                    out.writeObject(ans);
+                    return false;
+                }
+                Connection connection = DatabaseConnection.getConnection();
+                String updateStatement = "UPDATE uzytkownik SET Typ_uzytkownika = 'petent' WHERE E-mail = '" + userEmail + "' AND Typ_uzytkownika = 'pracownik';";
+                int updatedRows;
+                synchronized (this) {
+                    PreparedStatement update = connection.prepareStatement(updateStatement);
+                    updatedRows = update.executeUpdate();
+                }
+                if(updatedRows > 0) {
+                    ans = new Request("SUCCESS");
+                    success = true;
+                } else {
+                    ans = new Request("ERROR");
+                    success = true;
+                }
+            } catch (Exception e) {
+                System.out.println("TAKE ADMIN PRIVILEGE ERROR");
+                e.printStackTrace();
                 ans = new Request("ERROR");
                 success = false;
             }

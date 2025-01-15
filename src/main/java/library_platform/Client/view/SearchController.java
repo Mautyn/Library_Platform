@@ -1,4 +1,5 @@
 package library_platform.Client.view;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -6,12 +7,11 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import library_platform.Client.ConnectionHandler;
 import library_platform.Client.SceneController;
+import library_platform.Client.alert.AlertBuilder;
 import library_platform.Shared.Book;
 import library_platform.Shared.Converters;
 import library_platform.Shared.Request;
@@ -45,8 +45,14 @@ public class SearchController implements Initializable {
      * Tabela z wpisami
      */
     @FXML
+    private TableColumn<Book, CheckBox> checkboxColumn;
+
+    @FXML
     private TableView<Book> booksTable;
     private ObservableList<Book> books = FXCollections.observableArrayList();
+    public static ArrayList<Book> wishlistBooks = new ArrayList<>();
+
+
     public void initialize(URL url, ResourceBundle rb) {
         // ustawianie nagłówków dla kolumn
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -55,6 +61,22 @@ public class SearchController implements Initializable {
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             onSearchFieldChange(newValue);
+        });
+
+        checkboxColumn.setCellValueFactory(param -> {
+            CheckBox checkBox = new CheckBox();
+            checkBox.setOnAction(event -> {
+                if (checkBox.isSelected()) {
+                    System.out.println("Selected: " + param.getValue().getTitle());
+                    UserController.selectedBooks.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                            param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
+                } else {
+                    System.out.println("Deselected: " + param.getValue().getTitle());
+                    UserController.selectedBooks.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                            param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
+                }
+            });
+            return new SimpleObjectProperty<>(checkBox);
         });
 
         // obsługa wyszukiwania
@@ -108,9 +130,17 @@ public class SearchController implements Initializable {
     }
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void onAddToWistlistClick(ActionEvent actionEvent) {
+        if(LoginController.isLoggedIn){
+            wishlistBooks = UserController.selectedBooks;
+        }
+        AlertBuilder.showAlert("SUCCES!", "Books added to wishlist", Alert.AlertType.INFORMATION);
+
     }
 }

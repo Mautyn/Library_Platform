@@ -1,7 +1,6 @@
 package library_platform.Client.view;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.scene.control.TableColumn;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +9,7 @@ import library_platform.Client.alert.AlertBuilder;
 import library_platform.Shared.Book;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class UserController {
     @FXML
@@ -25,11 +25,14 @@ public class UserController {
     private Text showLoginText;
 
     public static String buttonType;
+    public static ArrayList<Book> selectedBooks = new ArrayList<>();
+
 
     public void initialize() {
         if (LoginController.isLoggedIn) {
             showLoginText.setText(LoginController.loggedInUserEmail);
         }
+
     }
 
     public void onLogOutClick(ActionEvent event) {
@@ -37,7 +40,7 @@ public class UserController {
             LoginController.isLoggedIn = false;
             AlertBuilder.showAlert("Log out", "You have been logged out.",
                     javafx.scene.control.Alert.AlertType.INFORMATION);
-            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+            SceneController.setScene(event, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +82,7 @@ public class UserController {
     }
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

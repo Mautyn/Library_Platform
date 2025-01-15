@@ -65,6 +65,11 @@
                                 <Font size="52.0" />
                             </font>
                         </Text>
+                  <JFXButton id="addToWishlistButton" layoutX="494.0" layoutY="25.0" onAction="#onAddToWistlistClick" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #3a8c79;" text="Add to wishlist" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </JFXButton>
                     </children>
                 </Pane>
                 <Pane id="search_pane" layoutX="44.0" layoutY="114.0" prefHeight="398.0" prefWidth="589.0">
@@ -75,7 +80,7 @@
                                     <Font name="Century Gothic" size="16.0" />
                                 </font>
                             </TextField>
-                            <ScrollPane prefHeight="330.0" prefWidth="599.0">
+                            <ScrollPane prefHeight="330.0" prefWidth="672.0">
                                 <GridPane BorderPane.alignment="CENTER">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -84,11 +89,12 @@
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <TableView fx:id="booksTable" prefWidth="584.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                        <TableView fx:id="booksTable" prefHeight="328.0" prefWidth="596.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                             <columns>
-                                                <TableColumn fx:id="titleCol" editable="false" text="Title" />
-                                                <TableColumn fx:id="authorCol" editable="false" text="Author" />
-                                                <TableColumn fx:id="categoryCol" editable="false" text="Category" />
+                                                <TableColumn fx:id="titleCol" editable="false" prefWidth="169.0" text="Title" />
+                                                <TableColumn fx:id="authorCol" editable="false" prefWidth="182.0" text="Author" />
+                                                <TableColumn fx:id="categoryCol" editable="false" prefWidth="169.0" text="Category" />
+                                    <TableColumn fx:id="checkboxColumn" prefWidth="47.0" text="Select" />
                                             </columns>
                                             <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

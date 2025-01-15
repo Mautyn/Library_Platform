@@ -4,7 +4,6 @@ import library_platform.Client.SceneController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import java.io.IOException;
 
@@ -51,7 +50,7 @@ public class MainPageController {
     }
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -63,5 +62,18 @@ public class MainPageController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void onWishlistClick(ActionEvent actionEvent) {
+            try {
+                if(LoginController.isLoggedIn) {
+                    SceneController.setScene(actionEvent, "/library_platform/wishlistScene.fxml");
+                }
+                else {
+                    SceneController.setScene(actionEvent, "/library_platform/loginScene.fxml");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
     }
 }

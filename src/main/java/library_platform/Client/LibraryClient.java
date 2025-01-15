@@ -11,7 +11,7 @@ public class LibraryClient extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/library_platform/hello-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/library_platform/mainpageScene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

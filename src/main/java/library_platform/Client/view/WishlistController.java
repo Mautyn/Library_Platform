@@ -1,13 +1,17 @@
 package library_platform.Client.view;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import library_platform.Client.SceneController;
 import library_platform.Shared.Book;
+import library_platform.Shared.Converters;
 
 import java.io.IOException;
 
@@ -26,12 +30,13 @@ public class WishlistController {
     private TableColumn<Book, String> publisherColumn;
 
     @FXML
-    private TableColumn<Book, String> bookIdColumn;
-
-    @FXML
     private TableColumn<Book, CheckBox> selectColumn;
 
     public void initialize() {
+        publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+
         selectColumn.setCellValueFactory(param -> {
             CheckBox checkBox = new CheckBox();
             checkBox.setOnAction(event -> {
@@ -43,11 +48,14 @@ public class WishlistController {
             });
             return new SimpleObjectProperty<>(checkBox);
         });
+
+        ObservableList<Book> booksObservableList = FXCollections.observableList(Converters.convertToObservable(SearchController.wishlistBooks));
+        tableView.setItems(booksObservableList);
     }
 
     public void onBackClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -74,7 +82,7 @@ public class WishlistController {
     }
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

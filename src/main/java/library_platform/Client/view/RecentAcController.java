@@ -30,7 +30,7 @@ public class RecentAcController {
     }
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

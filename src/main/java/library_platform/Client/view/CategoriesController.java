@@ -5,21 +5,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import library_platform.Client.ConnectionHandler;
 import library_platform.Client.SceneController;
-import library_platform.Client.alert.AlertBuilder;
 import library_platform.Shared.Book;
 import library_platform.Shared.Converters;
-import library_platform.Shared.DatabaseConnection;
 import library_platform.Shared.Request;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CategoriesController {
@@ -85,7 +78,7 @@ public class CategoriesController {
 
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

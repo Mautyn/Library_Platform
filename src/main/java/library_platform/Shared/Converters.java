@@ -15,14 +15,9 @@ public class Converters {
     public static ArrayList<Book> convertToArrayList(ObservableList<Book> booksObservableList) {
         ArrayList<Book> booksArrayList = new ArrayList<>();
         for (Book b : booksObservableList) {
-            Book book = new Book(b.getTitle(), b.getAuthor(), b.getYear(), b.getPublisher());
+            Book book = new Book(b.getTitle(), b.getAuthor(), b.getYear(), b.getPublisher(), b.getDate());
             book.setId(b.getId());
             book.setCategory(b.getCategory());
-            if(b.isBorrowed()) {
-                book.borrow();
-            } else {
-                book.returnBook();
-            }
             booksArrayList.add(book);
         }
         return booksArrayList;
@@ -36,14 +31,9 @@ public class Converters {
     public static ObservableList<Book> convertToObservable(ArrayList<Book> booksArrayList) {
         ObservableList<Book> books = FXCollections.observableArrayList();
         for (Book book : booksArrayList) {
-            Book bk = new Book(book.getTitle(), book.getAuthor(), book.getYear(), book.getPublisher());
+            Book bk = new Book(book.getTitle(), book.getAuthor(), book.getYear(), book.getPublisher(), book.getDate());
             bk.setCategory(book.getCategory());
             bk.setId(book.getId());
-            if(book.isBorrowed()) {
-                book.borrow();
-            } else {
-                book.returnBook();
-            }
             books.add(bk);
         }
         return FXCollections.observableArrayList(books);

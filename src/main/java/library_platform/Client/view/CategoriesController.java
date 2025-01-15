@@ -192,10 +192,10 @@ public class CategoriesController {
         }
     }
 
-    public void loadBooksFromDatabase(TableView<Book> tableView, String sortBy) {
+    public void loadBooksFromDatabase(TableView<Book> tableView, String sortBy, String mode) {
         ConnectionHandler serverConnection = ConnectionHandler.getInstance();
         Request request = new Request("GET_BOOKS");
-        Request searchMode = new Request("CATEGORIES");
+        Request searchMode = new Request(mode);
         Request searchQuery = new Request(sortBy);
 
         serverConnection.sendObjectToServer(request);
@@ -205,6 +205,5 @@ public class CategoriesController {
         ArrayList<Book> booksArrayList = (ArrayList<Book>) serverConnection.readObjectFromServer();
         ObservableList<Book> booksObservableList = FXCollections.observableList(Converters.convertToObservable(booksArrayList));
         tableView.setItems(booksObservableList);
-
     }
 }

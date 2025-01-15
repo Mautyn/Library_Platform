@@ -11,31 +11,33 @@ public class Book implements Serializable {
     @Serial
     private static final long serialVersionUID = 21372137;
 
-    private Integer id;
+    private Integer bookId;
     private String title;
     private String author;
     private String year;
     private String publisher;
     private String category;
-    private boolean isBorrowed;
+    private String date;
 
     // to było simpleBooleanProperty ale zmieniłem na boolean bo sie nie serializowało
     // jeśli checkbox sie wyjebie to mozliwe ze przez to
     private boolean selected;
 
 
-    public Book(String title, String author, String year, String publisher) {
+
+    public Book(String title, String author, String year, String publisher, String date) {
         this.author = author;
         this.year = year;
         this.publisher = publisher;
         this.title = title;
-        this.isBorrowed = false;
+        this.date = date;
     }
 
     public Book(String title) {
         this.title = title;
-        this.isBorrowed = false;
     }
+
+    public Book() {}
 
     public String getTitle() {
         return title;
@@ -49,23 +51,11 @@ public class Book implements Serializable {
         return publisher;
     }
 
-    public boolean isBorrowed() {
-        return isBorrowed;
-    }
-
-    public void borrow() {
-        this.isBorrowed = true;
-    }
-
-    public void returnBook() {
-        this.isBorrowed = false;
-    }
-
     public Integer getId() {
-        return id;
+        return bookId;
     }
     public void setId(Integer id) {
-        this.id = id;
+        this.bookId = id;
     }
     public String getAuthor() {
         return author;
@@ -92,12 +82,13 @@ public class Book implements Serializable {
         this.publisher = publisher;
     }
 
-    public void setBorrowed(boolean borrowed) {
-        isBorrowed = borrowed;
+    public String getDate() {
+        return date;
     }
 
-    @Override
-    public String toString() {
-        return title + (isBorrowed ? " (Borrowed)" : "");
+    public void setDate(String date) {
+        this.date = date;
     }
 }
+
+

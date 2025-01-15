@@ -1,11 +1,13 @@
 package library_platform.Client.view;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
+import library_platform.Shared.Book;
 
 import java.io.IOException;
 
@@ -21,6 +23,8 @@ public class UserController {
 
     @FXML
     private Text showLoginText;
+
+    public static String buttonType;
 
     public void initialize() {
         if (LoginController.isLoggedIn) {
@@ -41,8 +45,8 @@ public class UserController {
 
     public void onborrowedBooksClick(ActionEvent event) {
         try {
-
-            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+            buttonType = "borrowedBooks";
+            SceneController.setScene(event, "/library_platform/returnBorrowScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -50,8 +54,8 @@ public class UserController {
 
     public void onreturnedBooksClick(ActionEvent event) {
         try {
-
-            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+            buttonType = "returnedBooks";
+            SceneController.setScene(event, "/library_platform/returnBorrowScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

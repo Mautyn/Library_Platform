@@ -34,6 +34,7 @@ public class LoginController {
 
     public static boolean isLoggedIn = false;
     public static String loggedInUserEmail = "";
+    public static String user_id = "";
 
     public void onLog_inClick(ActionEvent event) throws IOException {
         String login = LoginTextField.getText();

@@ -11,7 +11,7 @@ import library_platform.Shared.Book;
 
 import java.io.IOException;
 
-public class borrowedController {
+public class ReturnBorrowController {
     @FXML
     private TableView<Book> tableView;
 
@@ -25,31 +25,41 @@ public class borrowedController {
     private TableColumn<Book, String> bookIdColumn;
 
     @FXML
-    private TableColumn<Book, String> rentalDateColumn;
+    private TableColumn<Book, String> dateColumn;
 
     @FXML
     private JFXButton backButton;
 
     public void initialize() {
-        initialize(bookIdColumn ,titleColumn, authorColumn, rentalDateColumn, tableView, LoginController.loggedInUserEmail);
+        initialize(bookIdColumn ,titleColumn, authorColumn, dateColumn, tableView, LoginController.loggedInUserEmail);
     }
 
     static void initialize(TableColumn<Book, String> bookIdColumn,
                            TableColumn<Book, String> titleColumn,
                            TableColumn<Book, String> authorColumn,
-                           TableColumn<Book, String> rentalDateColumn,
+                           TableColumn<Book, String> dateColumn,
                            TableView<Book> tableView,
                            String sortBy)
     {
+        String mode = "";
+
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        rentalDateColumn.setCellValueFactory(new PropertyValueFactory<>("rentalDate"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 
         CategoriesController controller = new CategoriesController();
 
-        controller.loadBooksFromDatabase(tableView, sortBy, "BORROWED");
+        if(UserController.buttonType == "borrowedBooks") {
+            dateColumn.setText("rental date");
+            mode = "BORROWED";
+        }
+        if(UserController.buttonType == "returnedBooks") {
+            dateColumn.setText("returned date");
+            mode = "RETURNED";
+        }
+        controller.loadBooksFromDatabase(tableView, sortBy, mode);
     }
 
     public void onBackClick(ActionEvent actionEvent) {

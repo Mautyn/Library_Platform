@@ -335,7 +335,7 @@ public class LibraryServer {
                     }
                     return bookList;
                 } else if (searchMode.equals("FULL")) {
-                    if(searchQuery.isEmpty()) {
+                    if (searchQuery.isEmpty()) {
 
                         query = "SELECT * FROM ksiazka";
                         ResultSet rs;
@@ -345,7 +345,7 @@ public class LibraryServer {
                         }
                         ArrayList<Book> bookList = new ArrayList<>();
 
-                        while(rs.next()) {
+                        while (rs.next()) {
                             Book book = new Book(rs.getString("Tytul"));
                             book.setId(rs.getInt("ID_ksiazki"));
                             book.setCategory(rs.getString("Gatunek"));
@@ -356,6 +356,7 @@ public class LibraryServer {
                         }
                         return bookList;
                     }
+                }
                     else if(searchMode.equals("RETURNED") || searchMode.equals("BORROWED")) {
                         String date;
                         String status;
@@ -410,7 +411,6 @@ public class LibraryServer {
                         }
                         return bookList;
                     }
-                }
             } catch (Exception exception) {
                 throw new RuntimeException(exception);
             }

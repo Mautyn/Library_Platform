@@ -67,7 +67,7 @@ public class CategListController {
 
         CategoriesController controller = new CategoriesController();
 
-        controller.loadBooksFromDatabase(tableView, sortBy);
+        controller.loadBooksFromDatabase(tableView, sortBy, "CATEGORIES");
     }
 
     public void onWishListClick(ActionEvent actionEvent) throws IOException{

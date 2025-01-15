@@ -3,9 +3,9 @@ package library_platform.Client.view;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import library_platform.Client.SceneController;
 import library_platform.Shared.Book;
 
@@ -29,6 +29,28 @@ public class borrowedController {
 
     @FXML
     private JFXButton backButton;
+
+    public void initialize() {
+        initialize(bookIdColumn ,titleColumn, authorColumn, rentalDateColumn, tableView, LoginController.loggedInUserEmail);
+    }
+
+    static void initialize(TableColumn<Book, String> bookIdColumn,
+                           TableColumn<Book, String> titleColumn,
+                           TableColumn<Book, String> authorColumn,
+                           TableColumn<Book, String> rentalDateColumn,
+                           TableView<Book> tableView,
+                           String sortBy)
+    {
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+        bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        rentalDateColumn.setCellValueFactory(new PropertyValueFactory<>("rentalDate"));
+
+
+        CategoriesController controller = new CategoriesController();
+
+        controller.loadBooksFromDatabase(tableView, sortBy, "BORROWED");
+    }
 
     public void onBackClick(ActionEvent actionEvent) {
         try {

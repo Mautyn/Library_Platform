@@ -62,7 +62,7 @@ import java.io.IOException;
 
         CategoriesController controller = new CategoriesController();
 
-        controller.loadBooksFromDatabase(tableView, sortBy);
+        controller.loadBooksFromDatabase(tableView, sortBy, "CATEGORIES");
     }
 
     public void onSearchClick(ActionEvent actionEvent) {

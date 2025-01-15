@@ -17,17 +17,20 @@ public class Book implements Serializable {
     private String year;
     private String publisher;
     private String category;
+    private String date;
 
     // to było simpleBooleanProperty ale zmieniłem na boolean bo sie nie serializowało
     // jeśli checkbox sie wyjebie to mozliwe ze przez to
     private boolean selected;
 
 
-    public Book(String title, String author, String year, String publisher) {
+
+    public Book(String title, String author, String year, String publisher, String date) {
         this.author = author;
         this.year = year;
         this.publisher = publisher;
         this.title = title;
+        this.date = date;
     }
 
     public Book(String title) {
@@ -77,6 +80,14 @@ public class Book implements Serializable {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
 

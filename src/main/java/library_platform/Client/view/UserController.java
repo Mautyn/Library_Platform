@@ -41,8 +41,7 @@ public class UserController {
 
     public void onborrowedBooksClick(ActionEvent event) {
         try {
-
-            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+            SceneController.setScene(event, "/library_platform/borrowedBooks.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

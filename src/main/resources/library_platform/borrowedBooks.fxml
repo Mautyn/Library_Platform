@@ -55,12 +55,12 @@
             <children>
                 <Pane layoutX="151.0" layoutY="108.0" prefHeight="327.0" prefWidth="443.0" style="-fx-background-color: #0e636e;">
                <children>
-                  <TableView id="tableView" layoutX="-1.0" layoutY="-1.0" prefHeight="327.0" prefWidth="443.0">
+                  <TableView fx:id="tableView" layoutX="-1.0" layoutY="-1.0" prefHeight="327.0" prefWidth="443.0">
                     <columns>
-                        <TableColumn fx:id="bookIdColumn" prefWidth="75.0" text="book id" />
-                      <TableColumn fx:id="titleColumn" prefWidth="120.80006408691406" text="title" />
-                      <TableColumn fx:id="authorColumn" prefWidth="117.5999755859375" text="author" />
-                        <TableColumn fx:id="rentalDateColumn" prefWidth="119.2000732421875" text="rental date" />
+                        <TableColumn id="bookIdColumn" fx:id="bookIdColumn" prefWidth="75.0" text="book id" />
+                      <TableColumn id="titleColumn" fx:id="titleColumn" prefWidth="120.80006408691406" text="title" />
+                      <TableColumn id="authorColumn" fx:id="authorColumn" prefWidth="117.5999755859375" text="author" />
+                        <TableColumn id="rentalColumn" fx:id="rentalDateColumn" prefWidth="119.2000732421875" text="rental date" />
                     </columns>
                   </TableView>
                </children>

@@ -5,11 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import library_platform.Client.SceneController;
+import library_platform.Client.alert.AlertBuilder;
 import library_platform.Shared.Book;
 import library_platform.Shared.Converters;
 
@@ -35,6 +37,7 @@ public class WishlistController {
 
     public static ArrayList<Book> wishlistBooks = new ArrayList<>();
     public static ArrayList<Book> selectedBooks = new ArrayList<>();
+    public static ArrayList<Book> toRemoveList = new ArrayList<>();
 
 
 
@@ -47,9 +50,13 @@ public class WishlistController {
             CheckBox checkBox = new CheckBox();
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
-                    System.out.println("Selected: " + param.getValue().getTitle());
+                    System.out.println("Selected to Remove: " + param.getValue().getTitle());
+                    WishlistController.toRemoveList.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                            param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 } else {
-                    System.out.println("Deselected: " + param.getValue().getTitle());
+                    System.out.println("Deselected to remove: " + param.getValue().getTitle());
+                    WishlistController.toRemoveList.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                            param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 }
             });
             return new SimpleObjectProperty<>(checkBox);
@@ -100,5 +107,13 @@ public class WishlistController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void onRemoveClick(ActionEvent actionEvent) {
+        wishlistBooks.removeAll(toRemoveList);
+        toRemoveList.clear();
+        tableView.setItems(FXCollections.observableList(wishlistBooks));
+
+        AlertBuilder.showAlert("SUCCES!", "Selected books removed from wishlist", Alert.AlertType.INFORMATION);
     }
 }

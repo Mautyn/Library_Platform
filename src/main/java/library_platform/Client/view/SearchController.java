@@ -135,9 +135,16 @@ public class SearchController implements Initializable {
     }
 
     public void onAddToWishlistClick(ActionEvent actionEvent) {
-        if(LoginController.isLoggedIn){
-            WishlistController.wishlistBooks = WishlistController.selectedBooks;
+        try {
+            if(LoginController.isLoggedIn){
+                WishlistController.wishlistBooks = WishlistController.selectedBooks;
+                AlertBuilder.showAlert("SUCCES!", "Books added to wishlist", Alert.AlertType.INFORMATION);
+            }
+            else {
+                SceneController.setScene(actionEvent, "/library_platform/loginScene.fxml");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        AlertBuilder.showAlert("SUCCES!", "Books added to wishlist", Alert.AlertType.INFORMATION);
     }
 }

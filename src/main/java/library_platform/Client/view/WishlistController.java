@@ -116,4 +116,8 @@ public class WishlistController {
 
         AlertBuilder.showAlert("SUCCES!", "Selected books removed from wishlist", Alert.AlertType.INFORMATION);
     }
+
+    public void onReserveClick(ActionEvent actionEvent) {
+
+    }
 }

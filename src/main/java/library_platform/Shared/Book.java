@@ -114,6 +114,29 @@ public class Book implements Serializable {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (!title.equals(book.title)) return false;
+        if (!author.equals(book.author)) return false;
+        if (!year.equals(book.year)) return false;
+        if (!publisher.equals(book.publisher)) return false;
+        return category != null ? category.equals(book.category) : book.category == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title.hashCode();
+        result = 31 * result + author.hashCode();
+        result = 31 * result + year.hashCode();
+        result = 31 * result + publisher.hashCode();
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        return result;
+
     }
 }
 

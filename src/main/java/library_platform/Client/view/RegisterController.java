@@ -3,21 +3,16 @@ package library_platform.Client.view;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import library_platform.Client.ConnectionHandler;
 import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
-import library_platform.Shared.DatabaseConnection;
 import library_platform.Shared.LoginCredentials;
 import library_platform.Shared.Request;
 
-import java.sql.*;
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class RegisterController {
 
@@ -105,7 +100,7 @@ public class RegisterController {
 
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

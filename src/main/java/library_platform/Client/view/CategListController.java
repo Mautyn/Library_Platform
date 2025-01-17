@@ -4,12 +4,14 @@ import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import library_platform.Client.SceneController;
+import library_platform.Client.alert.AlertBuilder;
 import library_platform.Shared.Book;
 
 import java.io.IOException;
@@ -58,8 +60,12 @@ public class CategListController {
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
                     System.out.println("Selected: " + param.getValue().getTitle());
+                    WishlistController.selectedBooks.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                            param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 } else {
                     System.out.println("Deselected: " + param.getValue().getTitle());
+                    WishlistController.selectedBooks.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                            param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 }
             });
             return new SimpleObjectProperty<>(checkBox);
@@ -68,20 +74,6 @@ public class CategListController {
         CategoriesController controller = new CategoriesController();
 
         controller.loadBooksFromDatabase(tableView, sortBy, "CATEGORIES");
-    }
-
-    public void onWishListClick(ActionEvent actionEvent) throws IOException{
-        if (LoginController.isLoggedIn) {
-
-            //dodanie do wishlisty dla danego użytkownika
-
-        } else {
-            try {
-                SceneController.setScene(actionEvent, "/library_platform/loginScene.fxml");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     public void onSearchClick(ActionEvent actionEvent) {
@@ -113,7 +105,20 @@ public class CategListController {
 
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void onAddToWishlistClick(ActionEvent actionEvent) {
+        try {
+            if(LoginController.isLoggedIn) {
+                WishlistController.wishlistBooks = WishlistController.selectedBooks;
+                AlertBuilder.showAlert("SUCCES!", "Books added to wishlist", Alert.AlertType.INFORMATION);
+            }
+            else{
+                SceneController.setScene(actionEvent, "/library_platform/loginScene.fxml");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

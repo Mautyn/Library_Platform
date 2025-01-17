@@ -2,19 +2,15 @@ package library_platform.Client.view;
 
 import javafx.scene.control.PasswordField;
 import library_platform.Client.ConnectionHandler;
-import library_platform.Shared.DatabaseConnection;
 import com.jfoenix.controls.JFXButton;
 import library_platform.Client.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import library_platform.Client.alert.AlertBuilder;
 import javafx.scene.control.TextField;
 import library_platform.Shared.LoginCredentials;
 import library_platform.Shared.Request;
 
-import java.sql.*;
 import java.io.IOException;
 
 public class LoginController {
@@ -51,7 +47,7 @@ public class LoginController {
         if(answer.getContent().equals("SUCCESS")) {
             isLoggedIn = true;
             loggedInUserEmail = login;
-            SceneController.setScene(event, "/library_platform/hello-view.fxml");
+            SceneController.setScene(event, "/library_platform/mainpageScene.fxml");
         } else if (answer.getContent().equals("INVALID")) {
             isLoggedIn = false;
             loggedInUserEmail = null;
@@ -91,7 +87,7 @@ public class LoginController {
 
     public void onMainPageClick(ActionEvent actionEvent) {
         try {
-            SceneController.setScene(actionEvent, "/library_platform/hello-view.fxml");
+            SceneController.setScene(actionEvent, "/library_platform/mainpageScene.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

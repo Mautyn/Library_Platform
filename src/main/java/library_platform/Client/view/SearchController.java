@@ -52,7 +52,6 @@ public class SearchController implements Initializable {
     private ObservableList<Book> books = FXCollections.observableArrayList();
 
     public void initialize(URL url, ResourceBundle rb) {
-        // ustawianie nagłówków dla kolumn
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
         categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -66,21 +65,19 @@ public class SearchController implements Initializable {
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
                     System.out.println("Selected: " + param.getValue().getTitle());
-                    WishlistController.selectedBooks.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    WishlistController.selectedBooks.add(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 } else {
                     System.out.println("Deselected: " + param.getValue().getTitle());
-                    WishlistController.selectedBooks.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    WishlistController.selectedBooks.remove(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 }
             });
             return new SimpleObjectProperty<>(checkBox);
         });
 
-        // obsługa wyszukiwania
         FilteredList<Book> filteredBooks = new FilteredList<>(books, p -> true);
 
-        // obsługa sortowania
         SortedList<Book> sortedBooks = new SortedList<>(filteredBooks);
         sortedBooks.comparatorProperty().bind(booksTable.comparatorProperty());
         booksTable.setItems(sortedBooks);

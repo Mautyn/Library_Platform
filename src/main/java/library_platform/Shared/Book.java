@@ -27,7 +27,8 @@ public class Book implements Serializable {
 
 
 
-    public Book(String title, String author, String year, String publisher, String date) {
+    public Book(Integer bookId ,String title, String author, String year, String publisher, String date) {
+        this.bookId = bookId;
         this.author = author;
         this.year = year;
         this.publisher = publisher;
@@ -56,18 +57,23 @@ public class Book implements Serializable {
     public Integer getId() {
         return bookId;
     }
+
     public void setId(Integer id) {
         this.bookId = id;
     }
+
     public String getAuthor() {
         return author;
     }
+
     public void setAuthor(String author) {
         this.author = author;
     }
+
     public String getCategory() {
         return category;
     }
+
     public void setCategory(String category) {
         this.category = category;
     }
@@ -114,6 +120,7 @@ public class Book implements Serializable {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

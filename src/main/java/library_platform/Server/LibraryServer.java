@@ -15,6 +15,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class LibraryServer {
@@ -98,8 +99,16 @@ public class LibraryServer {
                             break;
                         // ONLY USER
                         case "RESERVE_BOOK":
-                            if(loggedIn) {
-                                //
+                            try {
+                                ArrayList<Book> booksToReserve = (ArrayList<Book>) in.readObject();
+                                for (int i=0; i<booksToReserve.size(); i++) {
+                                    boolean success = ReserveBook(booksToReserve.get(i));
+                                    System.out.println("Reservation status for book " + booksToReserve.get(i).getTitle() + ": " + success);
+                                }
+                                out.writeObject(new Request("SUCCESS"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                out.writeObject(new Request("ERROR"));
                             }
                             break;
                         // ONLY USER
@@ -261,6 +270,94 @@ public class LibraryServer {
             return success;
         }
 
+        private boolean ReserveBook(Book newBook) {
+            Request ans1;
+            Request ans2;
+            boolean success;
+
+            String selectMaxIdQuery = "SELECT COALESCE(MAX(ID_wypozyczenia), 0) + 1 AS NewID FROM wypozyczenie";
+
+            String insertQuery = "INSERT INTO wypozyczenie (ID_wypozyczenia, ID_uzytkownika, ID_egzemplarza, " +
+                    "Data_wypozyczenia, Data_zwrotu, Status, Kara_za_opoznienie) VALUES (?, " +
+                    "(SELECT ID_uzytkownika FROM uzytkownik WHERE uzytkownik.E_mail = ?), " +
+                    "(SELECT ID_egzemplarza FROM egzemplarz WHERE ID_ksiazki = ? AND Stan = 'w bibliotece' LIMIT 1), " +
+                    "CURRENT_DATE, NULL, 'rezerwacja', 0)";
+
+            String updateQuery = "UPDATE egzemplarz SET Stan = 'wypożyczona', Lokalizacja = NULL " +
+                    "WHERE ID_egzemplarza = (SELECT ID_egzemplarza FROM egzemplarz WHERE ID_ksiazki = ? AND Stan = 'w bibliotece' LIMIT 1)";
+
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                connection.setAutoCommit(false);
+
+                int newId;
+                try (PreparedStatement selectStatement = connection.prepareStatement(selectMaxIdQuery)) {
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    if (resultSet.next()) {
+                        newId = resultSet.getInt("NewID");
+                    } else {
+                        throw new SQLException("Failed to retrieve new ID_wypozyczenia.");
+                    }
+                }
+
+                try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                    System.out.println(LoginController.loggedInUserEmail);
+
+                    insertStatement.setInt(1, newId);
+                    insertStatement.setString(2, LoginController.loggedInUserEmail);
+                    insertStatement.setInt(3, newBook.getId());
+
+                    int rowsInserted = insertStatement.executeUpdate();
+                    if (rowsInserted == 0) {
+                        ans1 = new Request("ERROR");
+                        throw new SQLException("Failed to insert reservation.");
+                    }
+                    else{
+                        ans1 = new Request("SUCCES");
+                    }
+                }
+
+                try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+                    updateStatement.setInt(1, newBook.getId());
+                    int rowsUpdated = updateStatement.executeUpdate();
+                    if (rowsUpdated == 0) {
+                        ans2 = new Request("ERROR");
+                        throw new SQLException("Failed to update book status.");
+                    }
+                    else {
+                        ans2 = new Request("SUCCESS");
+                    }
+                }
+                if(ans2.equals("SUCCES") && ans1.equals("SUCCES")){
+                    connection.commit();
+                    success = true;
+                    System.out.println("RESERVE SUCCESS");
+                }
+                else{
+                    success = false;
+                    connection.rollback();
+                    }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                ans1 = new Request("ERROR");
+                success = false;
+
+                try (Connection connection = DatabaseConnection.getConnection()) {
+                    connection.rollback();
+                } catch (Exception rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            }
+
+            try {
+                out.writeObject(ans1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return success;
+        }
+
         private boolean deleteUser(String userEmail, boolean me) {
             Request ans;
             boolean success;
@@ -298,7 +395,7 @@ public class LibraryServer {
         /**
          * Sets admin privileges to user
          * @param userEmail
-         * @return true if success false if error
+         * @return true if success false is error
          */
         private boolean setAdminPrivilege(String userEmail) {
             Request ans;
@@ -498,6 +595,7 @@ public class LibraryServer {
                     ResultSet rs;
                     synchronized (this) {
                         PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, "%" + searchQuery + "%");
                         rs = preparedStatement.executeQuery();
                     }
                     ArrayList<Book> bookList = new ArrayList<>();
@@ -555,23 +653,30 @@ public class LibraryServer {
                     }
                 } else if(searchMode.equals("RETURNED") || searchMode.equals("BORROWED")) {
                     String date;
-                    String status;
-                    if(searchMode.equals("RETURNED")){
+                    List<String> statuses = new ArrayList<>();
+                    if (searchMode.equals("RETURNED")) {
                         date = "Data_zwrotu";
-                        status = "zakończone";
-                    }
-                    else{
+                        statuses.add("zakończone");
+                    } else { // "BORROWED"
                         date = "Data_wypozyczenia";
-                        status = "aktywne";
+                        statuses.add("aktywne");
+                        statuses.add("rezerwacja");
                     }
-                    query = "SELECT ksiazka.*, wypozyczenie.data_wypozyczenia, wypozyczenie.data_zwrotu FROM ksiazka " +
-                            "JOIN egzemplarz on ksiazka.ID_ksiazki = egzemplarz.ID_ksiazki " +
-                            "JOIN wypozyczenie on egzemplarz.id_egzemplarza = wypozyczenie.id_egzemplarza " +
+                    query = "SELECT ksiazka.*, wypozyczenie.data_wypozyczenia, wypozyczenie.data_zwrotu " +
+                            "FROM ksiazka " +
+                            "JOIN egzemplarz ON ksiazka.ID_ksiazki = egzemplarz.ID_ksiazki " +
+                            "JOIN wypozyczenie ON egzemplarz.id_egzemplarza = wypozyczenie.id_egzemplarza " +
                             "LEFT JOIN uzytkownik ON uzytkownik.ID_uzytkownika = wypozyczenie.ID_uzytkownika " +
-                            "WHERE uzytkownik.E_mail LIKE '" + searchQuery + "' AND wypozyczenie.status like '" + status + "'"  ;
+                            "WHERE uzytkownik.E_mail LIKE ? AND wypozyczenie.status IN (" +
+                            statuses.stream().map(s -> "?").collect(Collectors.joining(",")) + ")";
                     ResultSet rs;
                     synchronized (this) {
                         PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        int index = 1;
+                        preparedStatement.setString(index++, "%" + searchQuery + "%");
+                        for (String status : statuses) {
+                            preparedStatement.setString(index++, status);
+                        }
                         rs = preparedStatement.executeQuery();
                     }
                     ArrayList<Book> bookList = new ArrayList<>();

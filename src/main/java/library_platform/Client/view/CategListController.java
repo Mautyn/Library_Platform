@@ -60,11 +60,11 @@ public class CategListController {
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
                     System.out.println("Selected: " + param.getValue().getTitle());
-                    WishlistController.selectedBooks.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    WishlistController.selectedBooks.add(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 } else {
                     System.out.println("Deselected: " + param.getValue().getTitle());
-                    WishlistController.selectedBooks.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    WishlistController.selectedBooks.remove(new Book(param.getValue().getId(),param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 }
             });

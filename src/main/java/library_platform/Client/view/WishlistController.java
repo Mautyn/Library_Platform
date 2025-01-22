@@ -10,10 +10,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import library_platform.Client.ConnectionHandler;
 import library_platform.Client.SceneController;
 import library_platform.Client.alert.AlertBuilder;
 import library_platform.Shared.Book;
 import library_platform.Shared.Converters;
+import library_platform.Shared.Request;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +39,6 @@ public class WishlistController {
 
     public static ArrayList<Book> wishlistBooks = new ArrayList<>();
     public static ArrayList<Book> selectedBooks = new ArrayList<>();
-    public static ArrayList<Book> toRemoveList = new ArrayList<>();
 
 
 
@@ -50,12 +51,12 @@ public class WishlistController {
             CheckBox checkBox = new CheckBox();
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
-                    System.out.println("Selected to Remove: " + param.getValue().getTitle());
-                    WishlistController.toRemoveList.add(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    System.out.println("Selected: " + param.getValue().getTitle());
+                    WishlistController.selectedBooks.add(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 } else {
-                    System.out.println("Deselected to remove: " + param.getValue().getTitle());
-                    WishlistController.toRemoveList.remove(new Book(param.getValue().getTitle(), param.getValue().getAuthor(),
+                    System.out.println("Deselected: " + param.getValue().getTitle());
+                    WishlistController.selectedBooks.remove(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 }
             });
@@ -110,8 +111,8 @@ public class WishlistController {
     }
 
     public void onRemoveClick(ActionEvent actionEvent) {
-        wishlistBooks.removeAll(toRemoveList);
-        toRemoveList.clear();
+        wishlistBooks.removeAll(selectedBooks);
+        selectedBooks.clear();
         tableView.setItems(FXCollections.observableList(wishlistBooks));
 
         AlertBuilder.showAlert("SUCCES!", "Selected books removed from wishlist", Alert.AlertType.INFORMATION);
@@ -119,5 +120,16 @@ public class WishlistController {
 
     public void onReserveClick(ActionEvent actionEvent) {
 
+        Request request = new Request("RESERVE_BOOK");
+        ConnectionHandler serverConnection = ConnectionHandler.getInstance();
+        serverConnection.sendObjectToServer(request);
+        serverConnection.sendObjectToServer(selectedBooks);
+        Request answer = (Request) serverConnection.readObjectFromServer();
+        if(answer.getContent().equals("SUCCESS")) {
+            AlertBuilder.showAlert("Reservation succesed", "Books will be ready for pickup in 2 hours", Alert.AlertType.INFORMATION);
+        } else if (answer.getContent().equals("ERROR")) {
+            AlertBuilder.showAlert("Reservation failed", "One of selected books is not avaiable now", Alert.AlertType.INFORMATION);
+        }
+        System.out.println("Sent wishlist to server: " + wishlistBooks);
     }
 }

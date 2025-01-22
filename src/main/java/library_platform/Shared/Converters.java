@@ -15,7 +15,7 @@ public class Converters {
     public static ArrayList<Book> convertToArrayList(ObservableList<Book> booksObservableList) {
         ArrayList<Book> booksArrayList = new ArrayList<>();
         for (Book b : booksObservableList) {
-            Book book = new Book(b.getTitle(), b.getAuthor(), b.getYear(), b.getPublisher(), b.getDate());
+            Book book = new Book(b.getId(),b.getTitle(), b.getAuthor(), b.getYear(), b.getPublisher(), b.getDate());
             book.setId(b.getId());
             book.setCategory(b.getCategory());
             booksArrayList.add(book);
@@ -31,7 +31,7 @@ public class Converters {
     public static ObservableList<Book> convertToObservable(ArrayList<Book> booksArrayList) {
         ObservableList<Book> books = FXCollections.observableArrayList();
         for (Book book : booksArrayList) {
-            Book bk = new Book(book.getTitle(), book.getAuthor(), book.getYear(), book.getPublisher(), book.getDate());
+            Book bk = new Book(book.getId(), book.getTitle(), book.getAuthor(), book.getYear(), book.getPublisher(), book.getDate());
             bk.setCategory(book.getCategory());
             bk.setId(book.getId());
             books.add(bk);

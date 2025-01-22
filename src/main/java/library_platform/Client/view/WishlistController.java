@@ -39,6 +39,7 @@ public class WishlistController {
 
     public static ArrayList<Book> wishlistBooks = new ArrayList<>();
     public static ArrayList<Book> selectedBooks = new ArrayList<>();
+    public ArrayList<Book> selectedBooks2 = new ArrayList<>();
 
 
 
@@ -52,11 +53,11 @@ public class WishlistController {
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
                     System.out.println("Selected: " + param.getValue().getTitle());
-                    WishlistController.selectedBooks.add(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
+                    selectedBooks2.add(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 } else {
                     System.out.println("Deselected: " + param.getValue().getTitle());
-                    WishlistController.selectedBooks.remove(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
+                    selectedBooks2.remove(new Book(param.getValue().getId(), param.getValue().getTitle(), param.getValue().getAuthor(),
                             param.getValue().getYear(), param.getValue().getPublisher(), param.getValue().getCategory()));
                 }
             });
@@ -111,7 +112,7 @@ public class WishlistController {
     }
 
     public void onRemoveClick(ActionEvent actionEvent) {
-        wishlistBooks.removeAll(selectedBooks);
+        wishlistBooks.removeAll(selectedBooks2);
         selectedBooks.clear();
         tableView.setItems(FXCollections.observableList(wishlistBooks));
 
@@ -123,13 +124,13 @@ public class WishlistController {
         Request request = new Request("RESERVE_BOOK");
         ConnectionHandler serverConnection = ConnectionHandler.getInstance();
         serverConnection.sendObjectToServer(request);
-        serverConnection.sendObjectToServer(selectedBooks);
+        serverConnection.sendObjectToServer(selectedBooks2);
         Request answer = (Request) serverConnection.readObjectFromServer();
         if(answer.getContent().equals("SUCCESS")) {
             AlertBuilder.showAlert("Reservation succesed", "Books will be ready for pickup in 2 hours", Alert.AlertType.INFORMATION);
         } else if (answer.getContent().equals("ERROR")) {
             AlertBuilder.showAlert("Reservation failed", "One of selected books is not avaiable now", Alert.AlertType.INFORMATION);
         }
-        System.out.println("Sent wishlist to server: " + wishlistBooks);
+        System.out.println("Sent wishlist to server: " + selectedBooks2);
     }
 }

@@ -105,10 +105,9 @@ public class LibraryServer {
                                     boolean success = ReserveBook(booksToReserve.get(i));
                                     System.out.println("Reservation status for book " + booksToReserve.get(i).getTitle() + ": " + success);
                                 }
-                                out.writeObject(new Request("SUCCESS"));
                             } catch (Exception e) {
+                                out.writeObject("ERROR");
                                 e.printStackTrace();
-                                out.writeObject(new Request("ERROR"));
                             }
                             break;
                         // ONLY USER
@@ -279,8 +278,8 @@ public class LibraryServer {
 
             String insertQuery = "INSERT INTO wypozyczenie (ID_wypozyczenia, ID_uzytkownika, ID_egzemplarza, " +
                     "Data_wypozyczenia, Data_zwrotu, Status, Kara_za_opoznienie) VALUES (?, " +
-                    "(SELECT ID_uzytkownika FROM uzytkownik WHERE uzytkownik.E_mail = ?), " +
-                    "(SELECT ID_egzemplarza FROM egzemplarz WHERE ID_ksiazki = ? AND Stan = 'w bibliotece' LIMIT 1), " +
+                    me.getUserId() +
+                    ", (SELECT ID_egzemplarza FROM egzemplarz WHERE ID_ksiazki = ? AND Stan = 'w bibliotece' LIMIT 1), " +
                     "CURRENT_DATE, NULL, 'rezerwacja', 0)";
 
             String updateQuery = "UPDATE egzemplarz SET Stan = 'wypożyczona', Lokalizacja = NULL " +
@@ -303,8 +302,7 @@ public class LibraryServer {
                     System.out.println(LoginController.loggedInUserEmail);
 
                     insertStatement.setInt(1, newId);
-                    insertStatement.setString(2, LoginController.loggedInUserEmail);
-                    insertStatement.setInt(3, newBook.getId());
+                    insertStatement.setInt(2, newBook.getId());
 
                     int rowsInserted = insertStatement.executeUpdate();
                     if (rowsInserted == 0) {
@@ -312,7 +310,7 @@ public class LibraryServer {
                         throw new SQLException("Failed to insert reservation.");
                     }
                     else{
-                        ans1 = new Request("SUCCES");
+                        ans1 = new Request("SUCCESS");
                     }
                 }
 
@@ -327,12 +325,15 @@ public class LibraryServer {
                         ans2 = new Request("SUCCESS");
                     }
                 }
-                if(ans2.equals("SUCCES") && ans1.equals("SUCCES")){
+                if(ans2.getContent().equals("SUCCESS") && ans1.getContent().equals("SUCCESS")){
                     connection.commit();
                     success = true;
                     System.out.println("RESERVE SUCCESS");
                 }
                 else{
+                    System.out.println("ANS1: " + ans1.getContent());
+                    System.out.println("ANS2: " + ans2.getContent());
+                    System.out.println("XDDD");
                     success = false;
                     connection.rollback();
                     }
@@ -595,7 +596,7 @@ public class LibraryServer {
                     ResultSet rs;
                     synchronized (this) {
                         PreparedStatement preparedStatement = connection.prepareStatement(query);
-                        preparedStatement.setString(1, "%" + searchQuery + "%");
+//                        preparedStatement.setString(1, "%" + searchQuery + "%");
                         rs = preparedStatement.executeQuery();
                     }
                     ArrayList<Book> bookList = new ArrayList<>();

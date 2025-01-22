@@ -64,7 +64,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="returnedBooksButton" layoutX="70.0" layoutY="243.0" onAction="#onreturnedBooksClick" prefHeight="31.0" prefWidth="136.0" style="-fx-background-color: #FFFFFF;" text="returned books">
+                  <JFXButton id="returnedBooksButton" layoutX="70.0" layoutY="243.0" onAction="#onReturnedBooksClick" prefHeight="31.0" prefWidth="136.0" style="-fx-background-color: #FFFFFF;" text="returned books">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -83,7 +83,7 @@
                         </Text>
                      </children>
                   </Pane>
-                  <JFXButton id="borrowedBooksButton" layoutX="70.0" layoutY="153.0" onAction="#onborrowedBooksClick" prefHeight="31.0" prefWidth="137.0" style="-fx-background-color: #FFFFFF;" text="whislist">
+                  <JFXButton id="wishlistButton" layoutX="70.0" layoutY="153.0" onAction="#onWishlistClick" prefHeight="31.0" prefWidth="137.0" style="-fx-background-color: #FFFFFF;" text="whislist">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

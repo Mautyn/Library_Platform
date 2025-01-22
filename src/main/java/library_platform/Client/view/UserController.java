@@ -22,6 +22,9 @@ public class UserController {
     private JFXButton borrowedBooksButton;
 
     @FXML
+    private JFXButton wishlistButton;
+
+    @FXML
     private Text showLoginText;
 
     public static String buttonType;
@@ -54,7 +57,7 @@ public class UserController {
         }
     }
 
-    public void onreturnedBooksClick(ActionEvent event) {
+    public void onReturnedBooksClick(ActionEvent event) {
         try {
             buttonType = "returnedBooks";
             SceneController.setScene(event, "/library_platform/returnBorrowScene.fxml");
@@ -62,6 +65,15 @@ public class UserController {
             throw new RuntimeException(e);
         }
     }
+
+    public void onWishlistClick(ActionEvent actionEvent) {
+        try {
+                SceneController.setScene(actionEvent, "/library_platform/wishlistScene.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void onFacilitiesClick(ActionEvent actionEvent) {
         try {

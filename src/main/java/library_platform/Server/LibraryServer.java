@@ -104,6 +104,10 @@ public class LibraryServer {
                                 for (int i=0; i<booksToReserve.size(); i++) {
                                     boolean success = ReserveBook(booksToReserve.get(i));
                                     System.out.println("Reservation status for book " + booksToReserve.get(i).getTitle() + ": " + success);
+                                    if(!success){
+                                        out.writeObject("ERROR");
+                                        break;
+                                    }
                                 }
                             } catch (Exception e) {
                                 out.writeObject("ERROR");
@@ -299,8 +303,6 @@ public class LibraryServer {
                 }
 
                 try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
-                    System.out.println(LoginController.loggedInUserEmail);
-
                     insertStatement.setInt(1, newId);
                     insertStatement.setInt(2, newBook.getId());
 

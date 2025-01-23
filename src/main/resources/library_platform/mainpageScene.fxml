@@ -30,7 +30,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton id="rActivity_button" layoutX="32.0" layoutY="217.0" onAction="#onRecentClick" prefHeight="31.0" prefWidth="132.0" text="Recent Activity" textFill="#fffdfd">
+                  <JFXButton id="rActivity_button" layoutX="32.0" layoutY="217.0" onAction="#onRecentClick" prefHeight="31.0" prefWidth="132.0" text="Notifications" textFill="#fffdfd">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

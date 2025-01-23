@@ -113,7 +113,7 @@ public class WishlistController {
 
     public void onRemoveClick(ActionEvent actionEvent) {
         wishlistBooks.removeAll(selectedBooks2);
-        selectedBooks.clear();
+        selectedBooks2.clear();
         tableView.setItems(FXCollections.observableList(wishlistBooks));
 
         AlertBuilder.showAlert("SUCCES!", "Selected books removed from wishlist", Alert.AlertType.INFORMATION);
